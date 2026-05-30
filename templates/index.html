@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasi Wisata BST Solo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+                colors: { cloud: '#dfe4e5', orange: '#f78837', charcoal: { lighter: '#3D5A66', DEFAULT: '#243037', darker: '#0F1A1F' }, aqua: '#075056' }
+            }
+          }
+        }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; border-radius: 0.5rem; z-index: 1; }
+        .leaflet-popup-content-wrapper, .leaflet-popup-tip { background-color: #243037; color: #dfe4e5; }
+    </style>
+</head>
+<body class="bg-charcoal min-h-screen text-cloud">
+    
+    <nav class="bg-charcoal-darker p-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="hover:text-orange text-xl font-bold transition">Pemilihan Objek Wisata BST</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="bg-charcoal-lighter p-6 rounded-lg shadow-md h-fit">
+                <h2 class="text-xl font-semibold mb-4 text-orange">Cari Rute Optimal (A*)</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Halte Asal:</label>
+                        <select id="start-halte" class="w-full bg-charcoal p-2 rounded border border-aqua focus:border-orange outline-none">
+                            {% for halte in haltes %}
+                                <option value="{{ halte.id }}">{{ halte.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Tempat Wisata Tujuan:</label>
+                        <select id="end-wisata" class="w-full bg-charcoal p-2 rounded border border-aqua focus:border-orange outline-none">
+                            {% for wisata in wisatas %}
+                                <option value="{{ wisata.name }}">{{ wisata.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button id="btn-cari" class="w-full bg-orange hover:bg-opacity-90 text-charcoal-darker font-bold py-2 px-4 rounded transition">Hitung Rute</button>
+                </div>
+
+                <div id="hasil-rute" class="mt-6 border-t border-aqua pt-4 hidden">
+                    <h3 class="text-lg font-bold text-orange mb-2">Estimasi Perjalanan:</h3>
+                    <p class="text-sm">Jarak Bus: <span id="res-jarak" class="font-semibold">-</span></p>
+                    <p class="text-sm">Waktu Bus: <span id="res-waktu" class="font-semibold">-</span></p>
+                    <p class="text-sm">Transit: <span id="res-transfer" class="font-semibold">-</span></p>
+                    <p class="text-sm text-orange mt-2">Jalan Kaki ke Tujuan: <span id="res-jalan" class="font-semibold">-</span></p>
+                    
+                    <h3 class="text-md font-bold mt-4 text-orange">Panduan Rute:</h3>
+                    <ol id="res-detail-path" class="list-decimal list-inside text-sm space-y-1 mt-2"></ol>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 bg-charcoal-darker p-4 rounded-lg shadow-md">
+                <div id="map"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const map = L.map('map').setView([-7.5666, 110.8222], 13);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        const routeLayer = L.layerGroup().addTo(map);
+
+        document.getElementById("btn-cari").addEventListener("click", () => {
+            const startId = document.getElementById("start-halte").value;
+            const wisataName = document.getElementById("end-wisata").value; 
+
+            fetch("/api/cari_rute_wisata", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ start_id: startId, wisata_name: wisataName })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    tampilkanHasil(data.result);
+                    gambarPeta(data.result);
+                } else alert(data.message);
+            });
+        });
+
+        function tampilkanHasil(result) {
+            document.getElementById("hasil-rute").classList.remove("hidden");
+            document.getElementById("res-jarak").innerText = `${result.total_distance.toFixed(2)} km`;
+            document.getElementById("res-waktu").innerText = `~${result.total_time.toFixed(0)} menit`;
+            document.getElementById("res-transfer").innerText = `${result.transfers} kali`;
+            
+            const jarakJalan = result.walking_distance_to_attraction.toFixed(2);
+            const waktuJalan = Math.round(result.walking_distance_to_attraction * 12);
+            document.getElementById("res-jalan").innerText = `${jarakJalan} km (~${waktuJalan} menit)`;
+
+            const detailList = document.getElementById("res-detail-path");
+            detailList.innerHTML = "";
+            result.path_names.forEach((name, i) => {
+                const li = document.createElement("li");
+                if (i === result.path_names.length - 1) {
+                    li.innerHTML = `${name} <br><span class="text-orange">➔ Jalan kaki ke ${result.destination_attraction}</span>`;
+                } else {
+                    li.innerText = `${name} ➔ Naik Koridor ${result.routes[i]}`;
+                }
+                detailList.appendChild(li);
+            });
+        }
+
+        // Fungsi yang diubah menjadi async dan menggunakan OSRM untuk menggambar jalan raya
+        async function gambarPeta(result) {
+            routeLayer.clearLayers();
+            const busCoords = result.koordinat_path;
+            const latlngs = [];
+
+            // 1. Gambar Marker & Kumpulkan Koordinat
+            busCoords.forEach((pt, idx) => {
+                latlngs.push([pt.lat, pt.lng]);
+                L.marker([pt.lat, pt.lng]).addTo(routeLayer)
+                 .bindPopup(`<b>${pt.name}</b><br>Halte BST`);
+            });
+
+            // 2. Ambil rute mengikuti jalan raya untuk Bus (Driving Route)
+            if (busCoords.length > 1) {
+                const coordsStr = busCoords.map(pt => `${pt.lng},${pt.lat}`).join(';');
+                const osrmBusUrl = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`;
+                
+                try {
+                    const response = await fetch(osrmBusUrl);
+                    const data = await response.json();
+                    
+                    if (data.routes && data.routes.length > 0) {
+                        const routeGeoJSON = data.routes[0].geometry;
+                        L.geoJSON(routeGeoJSON, {
+                            style: { color: '#f78837', weight: 5, opacity: 0.8 }
+                        }).addTo(routeLayer);
+                    } else {
+                        // Fallback (garis lurus) jika rute jalan gagal
+                        L.polyline(busCoords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                    }
+                } catch (e) {
+                    console.error("OSRM Bus Error:", e);
+                    L.polyline(busCoords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                }
+            }
+
+            // 3. Ambil rute jalan kaki ke tempat wisata (jika ada)
+            if(result.koordinat_wisata) {
+                const wisata = result.koordinat_wisata;
+                const halteTerakhir = busCoords[busCoords.length - 1];
+                
+                latlngs.push([wisata.lat, wisata.lng]);
+
+                // Marker spesial untuk Tempat Wisata
+                L.circleMarker([wisata.lat, wisata.lng], {
+                    color: '#075056', fillColor: '#075056', fillOpacity: 1, radius: 8
+                }).addTo(routeLayer).bindPopup(`<b>${wisata.name}</b><br>Tujuan Wisata`);
+
+                // Mengambil rute jalan kaki (Foot Route) via OSRM
+                const osrmFootUrl = `https://router.project-osrm.org/route/v1/foot/${halteTerakhir.lng},${halteTerakhir.lat};${wisata.lng},${wisata.lat}?overview=full&geometries=geojson`;
+                
+                try {
+                    const resFoot = await fetch(osrmFootUrl);
+                    const dataFoot = await resFoot.json();
+
+                    if (dataFoot.routes && dataFoot.routes.length > 0) {
+                        const footGeoJSON = dataFoot.routes[0].geometry;
+                        L.geoJSON(footGeoJSON, {
+                            style: { color: '#075056', weight: 4, dashArray: '5, 10' }
+                        }).addTo(routeLayer);
+                    } else {
+                        L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { color: '#075056', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
+                    }
+                } catch (e) {
+                    console.error("OSRM Foot Error:", e);
+                    L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { color: '#075056', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
+                }
+            }
+
+            const bounds = L.latLngBounds(latlngs);
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    </script>
+</body>
+</html>
