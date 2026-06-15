@@ -1,0 +1,188 @@
+[
+    {
+        "id": "K1",
+        "name": "Koridor 1",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 30
+    },
+    {
+        "id": "K3",
+        "name": "Koridor 3",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 30
+    },
+    {
+        "id": "K4",
+        "name": "Koridor 4",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 30
+    },
+    {
+        "id": "K5",
+        "name": "Koridor 5",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 30
+    },
+    {
+        "id": "K6",
+        "name": "Koridor 6",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 30
+    },
+    {
+        "id": "FD2",
+        "name": "Feeder 2",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 25
+    },
+    {
+        "id": "FD7",
+        "name": "Feeder 7",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 25
+    },
+    {
+        "id": "FD8",
+        "name": "Feeder 8",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 25
+    },
+    {
+        "id": "FD9",
+        "name": "Feeder 9",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 25
+    },
+    {
+        "id": "FD10",
+        "name": "Feeder 10",
+        "hierarchy": "LOCAL",
+        "speed_kmh": 25
+    },
+    {
+        "id": "",
+        "name": "",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "AKDP_30",
+            "AKDP_31",
+            "AKDP_32",
+            "AKDP_33",
+            "AKDP_34",
+            "AKDP_35",
+            "AKDP_36",
+            "AKDP_37",
+            "AKDP_38",
+            "AKDP_39",
+            "AKDP_37",
+            "AKDP_38",
+            "AKDP_39",
+            "AKDP_40",
+            "AKDP_41",
+            "AKDP_42",
+            "AKDP_40",
+            "AKDP_41",
+            "AKDP_42",
+            "AKDP_43",
+            "AKDP_44",
+            "AKDP_45",
+            "AKDP_31",
+            "AKDP_46"
+        ]
+    },
+    {
+        "id": "BUS_AKDP_LANGSUNG_JAYA",
+        "name": "Bus AKDP Langsung Jaya",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_30",
+            "AKDP_31",
+            "AKDP_32",
+            "AKDP_33",
+            "AKDP_34",
+            "AKDP_35",
+            "AKDP_36"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_WAHYU_PUTRO",
+        "name": "Bus AKDP Wahyu Putro",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_37",
+            "AKDP_38",
+            "AKDP_39"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_PURWO_WIDODO",
+        "name": "Bus AKDP Purwo Widodo",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_37",
+            "AKDP_38",
+            "AKDP_39"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_SAFARI__ROYAL_SAFARI",
+        "name": "Bus AKDP Safari / Royal Safari",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_40",
+            "AKDP_41",
+            "AKDP_42"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_TARUNA",
+        "name": "Bus AKDP Taruna",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_40",
+            "AKDP_41",
+            "AKDP_42"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_RELA",
+        "name": "Bus AKDP Rela",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_43",
+            "AKDP_44",
+            "AKDP_45"
+        ],
+        "fare": 5000
+    },
+    {
+        "id": "BUS_AKDP_HARTA_SANJAYA",
+        "name": "Bus AKDP Harta Sanjaya",
+        "hierarchy": "INTER_REGIONAL",
+        "speed_kmh": 40,
+        "stops": [
+            "H18",
+            "AKDP_31",
+            "AKDP_46"
+        ],
+        "fare": 5000
+    }
+]

@@ -1,0 +1,256 @@
+[
+    {
+        "id": "W01",
+        "name": "Solo Safari",
+        "lat": -7.564391741,
+        "lon": 110.8586613,
+        "halte": [
+            "H01"
+        ]
+    },
+    {
+        "id": "W02",
+        "name": "Danau UNS",
+        "lat": -7.561172246,
+        "lon": 110.8581931,
+        "halte": [
+            "H02"
+        ]
+    },
+    {
+        "id": "W03",
+        "name": "Benteng Vastenburg",
+        "lat": -7.571804006,
+        "lon": 110.8307858,
+        "halte": [
+            "H03"
+        ]
+    },
+    {
+        "id": "W04",
+        "name": "Kampung Wisata Batik Kauman",
+        "lat": -7.573215566,
+        "lon": 110.8263633,
+        "halte": [
+            "H04"
+        ]
+    },
+    {
+        "id": "W05",
+        "name": "Pasar Triwindu",
+        "lat": -7.568984669,
+        "lon": 110.8225384,
+        "halte": [
+            "H05"
+        ]
+    },
+    {
+        "id": "W06",
+        "name": "Taman Sriwedari",
+        "lat": -7.568224905,
+        "lon": 110.8129629,
+        "halte": [
+            "H06",
+            "H07"
+        ]
+    },
+    {
+        "id": "W07",
+        "name": "De Tjolomadoe",
+        "lat": -7.533922576,
+        "lon": 110.7498663,
+        "halte": [
+            "H08"
+        ]
+    },
+    {
+        "id": "W08",
+        "name": "Lapangan Makamhaji",
+        "lat": -7.5691203,
+        "lon": 110.7831005,
+        "halte": [
+            "H09"
+        ]
+    },
+    {
+        "id": "W09",
+        "name": "Balaikota Surakarta",
+        "lat": -7.569192352,
+        "lon": 110.8296584,
+        "halte": [
+            "H11"
+        ]
+    },
+    {
+        "id": "W10",
+        "name": "Pasar Gede",
+        "lat": -7.569143893,
+        "lon": 110.8314553,
+        "halte": [
+            "H12"
+        ]
+    },
+    {
+        "id": "W11",
+        "name": "Solo Techno Park",
+        "lat": -7.555835181,
+        "lon": 110.8538009,
+        "halte": [
+            "H13"
+        ]
+    },
+    {
+        "id": "W12",
+        "name": "Taman Cerdas",
+        "lat": -7.553839457,
+        "lon": 110.8534741,
+        "halte": [
+            "H14"
+        ]
+    },
+    {
+        "id": "W13",
+        "name": "Taman Lansia",
+        "lat": -7.55669203,
+        "lon": 110.8607455,
+        "halte": [
+            "H15"
+        ]
+    },
+    {
+        "id": "W14",
+        "name": "Stadion Manahan",
+        "lat": -7.555259829,
+        "lon": 110.8065227,
+        "halte": [
+            "H17"
+        ]
+    },
+    {
+        "id": "W15",
+        "name": "Taman Tirtonadi",
+        "lat": -7.551283848,
+        "lon": 110.8204733,
+        "halte": [
+            "H18"
+        ]
+    },
+    {
+        "id": "W16",
+        "name": "Tumurun Private Museum",
+        "lat": -7.570257605,
+        "lon": 110.8164116,
+        "halte": [
+            "H23"
+        ]
+    },
+    {
+        "id": "W17",
+        "name": "Ngarsopuro Night Market",
+        "lat": -7.568494751,
+        "lon": 110.822291,
+        "halte": [
+            "H22"
+        ]
+    },
+    {
+        "id": "W18",
+        "name": "Taman Balikota Solo",
+        "lat": -7.569219287,
+        "lon": 110.8298679,
+        "halte": [
+            "H11"
+        ]
+    },
+    {
+        "id": "W19",
+        "name": "Museum Radya Pustaka",
+        "lat": -7.568292105,
+        "lon": 110.8144969,
+        "halte": [
+            "H24"
+        ]
+    },
+    {
+        "id": "W20",
+        "name": "Pasar Malangjiwan Colomadu",
+        "lat": -7.531636047,
+        "lon": 110.7472482,
+        "halte": [
+            "H21"
+        ]
+    },
+    {
+        "id": "W21",
+        "name": "Museum Keris Nusantara",
+        "lat": -7.568754681,
+        "lon": 110.8107542,
+        "halte": [
+            "H25"
+        ]
+    },
+    {
+        "id": "W22",
+        "name": "Loji Gandrung",
+        "lat": -7.566305927,
+        "lon": 110.8095326,
+        "halte": [
+            "H06"
+        ]
+    },
+    {
+        "id": "W23",
+        "name": "Gedung Wayang Orang Dance Theatre",
+        "lat": -7.56905024,
+        "lon": 110.812558,
+        "halte": [
+            "H24",
+            "H07"
+        ]
+    },
+    {
+        "id": "W24",
+        "name": "House of Danar Hadi",
+        "lat": -7.568506445,
+        "lon": 110.8162107,
+        "halte": [
+            "H19"
+        ]
+    },
+    {
+        "id": "W25",
+        "name": "Taman Punggawan Ngesus",
+        "lat": -7.564517132,
+        "lon": 110.818271,
+        "halte": [
+            "H27"
+        ]
+    },
+    {
+        "id": "W26",
+        "name": "Pura Mangkunegaran",
+        "lat": -7.566613944,
+        "lon": 110.8228758,
+        "halte": [
+            "H26"
+        ]
+    },
+    {
+        "id": "W27",
+        "name": "Pasar Klewer",
+        "lat": -7.575178766,
+        "lon": 110.8267555,
+        "halte": [
+            "H28"
+        ]
+    },
+    {
+        "id": "W28",
+        "name": "Taman Sunan Jogo Kali",
+        "lat": -7.569809858,
+        "lon": 110.8581447,
+        "halte": [
+            "H29"
+        ]
+    }
+]

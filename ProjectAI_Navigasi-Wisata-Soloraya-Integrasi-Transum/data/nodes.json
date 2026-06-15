@@ -1,0 +1,488 @@
+[
+    {
+        "id": "H01",
+        "name": "Jurug (Solo Safari)",
+        "lat": -7.56513474408024,
+        "lon": 110.858685876169,
+        "routes": [
+            "K1",
+            "FD2"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H02",
+        "name": "UNS",
+        "lat": -7.56455236195493,
+        "lon": 110.8561722718,
+        "routes": [
+            "K1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H03",
+        "name": "Vastenburg",
+        "lat": -7.57175743180982,
+        "lon": 110.8297470581,
+        "routes": [
+            "K1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H04",
+        "name": "Gladag",
+        "lat": -7.57203341152584,
+        "lon": 110.827739168751,
+        "routes": [
+            "K1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H05",
+        "name": "Pasar Pon Selatan",
+        "lat": -7.57053451729552,
+        "lon": 110.822770250784,
+        "routes": [
+            "K1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H06",
+        "name": "Sriwedari 1 Selatan",
+        "lat": -7.56729936753916,
+        "lon": 110.812057143543,
+        "routes": [
+            "K1",
+            "FD8"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H07",
+        "name": "Sriwedari 2 Selatan",
+        "lat": -7.56795480396892,
+        "lon": 110.814320671231,
+        "routes": [
+            "K1",
+            "FD8"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H08",
+        "name": "Colomadu Utara",
+        "lat": -7.53253942382143,
+        "lon": 110.748923594566,
+        "routes": [
+            "K1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H09",
+        "name": "Tugu Lilin",
+        "lat": -7.567581219,
+        "lon": 110.7835961,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H10",
+        "name": "Vestenburg (Kantor Pos)",
+        "lat": -7.57140133360988,
+        "lon": 110.829647652826,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H11",
+        "name": "Balai Kota",
+        "lat": -7.56993057310902,
+        "lon": 110.830046989632,
+        "routes": [
+            "K3",
+            "FD2"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H12",
+        "name": "Pasar Gede",
+        "lat": -7.5684698254206,
+        "lon": 110.831727375632,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H13",
+        "name": "Solo Techno Park",
+        "lat": -7.55653679470118,
+        "lon": 110.852209973442,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H14",
+        "name": "Kantor Kecamatan Jebres",
+        "lat": -7.55541900174376,
+        "lon": 110.854977935521,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H15",
+        "name": "Halte RS Jiwa / Taman Lansia",
+        "lat": -7.55707042819373,
+        "lon": 110.860610255225,
+        "routes": [
+            "K3"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H16",
+        "name": "Halte Kecamatan Colomadu",
+        "lat": -7.532634345,
+        "lon": 110.7487969,
+        "routes": [
+            "K4"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H17",
+        "name": "Stadion Manahan",
+        "lat": -7.556663684,
+        "lon": 110.8048193,
+        "routes": [
+            "K4"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H18",
+        "name": "Terminal Tirtonadi",
+        "lat": -7.551298569,
+        "lon": 110.8182099,
+        "routes": [
+            "K1",
+            "K3",
+            "K4",
+            "K5",
+            "K6",
+            "BUS_AKDP_LANGSUNG_JAYA",
+            "BUS_AKDP_WAHYU_PUTRO",
+            "BUS_AKDP_PURWO_WIDODO",
+            "BUS_AKDP_SAFARI__ROYAL_SAFARI",
+            "BUS_AKDP_TARUNA",
+            "BUS_AKDP_RELA",
+            "BUS_AKDP_HARTA_SANJAYA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H19",
+        "name": "Ngapeman",
+        "lat": -7.568500872,
+        "lon": 110.8166443,
+        "routes": [
+            "K5",
+            "FD8"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H20",
+        "name": "Sriwedari",
+        "lat": -7.567047482,
+        "lon": 110.8118452,
+        "routes": [
+            "K5"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H21",
+        "name": "Landasan Udara (Pasar Colomadu)",
+        "lat": -7.53171343,
+        "lon": 110.7473448,
+        "routes": [
+            "K5",
+            "FD7"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H22",
+        "name": "Ngarsopuro",
+        "lat": -7.569086355,
+        "lon": 110.8221284,
+        "routes": [
+            "K6"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H23",
+        "name": "Pasar Kembang",
+        "lat": -7.571950677,
+        "lon": 110.8166645,
+        "routes": [
+            "K6"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H24",
+        "name": "Sriwedari 2 Utara",
+        "lat": -7.567852615,
+        "lon": 110.8146095,
+        "routes": [
+            "FD2",
+            "FD8"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H25",
+        "name": "Museum Keris B",
+        "lat": -7.568829291,
+        "lon": 110.8106188,
+        "routes": [
+            "FD8"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H26",
+        "name": "Mangkunegaran",
+        "lat": -7.567624751,
+        "lon": 110.8220978,
+        "routes": [
+            "FD9"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H27",
+        "name": "Sahid",
+        "lat": -7.564166826,
+        "lon": 110.8185673,
+        "routes": [
+            "FD8",
+            "FD9"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H28",
+        "name": "Pasar Klewer",
+        "lat": -7.575037806,
+        "lon": 110.8264383,
+        "routes": [
+            "FD10"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H29",
+        "name": "Pasar Pucang Sawit A",
+        "lat": -7.567996022,
+        "lon": 110.8582507,
+        "routes": [
+            "FD10"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_30",
+        "name": "RS Dr. Oen Kandang Sapi",
+        "lat": -7.555456611059432,
+        "lon": 110.83739045206134,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_31",
+        "name": "Terminal Palur",
+        "lat": -7.565980353361813,
+        "lon": 110.87255700504775,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA",
+            "BUS_AKDP_HARTA_SANJAYA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_32",
+        "name": "Papahan",
+        "lat": -7.589650951463289,
+        "lon": 110.9263661048479,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_33",
+        "name": "Alun Alun Karanganyar",
+        "lat": -7.593548946468367,
+        "lon": 110.94026558246695,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_34",
+        "name": "Terminal Karanganyar",
+        "lat": -7.60461882974963,
+        "lon": 110.97193717513953,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_35",
+        "name": "Terminal Karangpandan",
+        "lat": -7.614425362654565,
+        "lon": 111.07403841909803,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_36",
+        "name": "Terminal Tawangmangu",
+        "lat": -7.668736395402045,
+        "lon": 111.11940270042919,
+        "routes": [
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_37",
+        "name": "Terminal Sukoharjo",
+        "lat": -7.694609608640546,
+        "lon": 110.84926336293498,
+        "routes": [
+            "BUS_AKDP_WAHYU_PUTRO",
+            "BUS_AKDP_PURWO_WIDODO"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_38",
+        "name": "Terminal Giri Adipura",
+        "lat": -7.791390155407918,
+        "lon": 110.90071358096273,
+        "routes": [
+            "BUS_AKDP_WAHYU_PUTRO",
+            "BUS_AKDP_PURWO_WIDODO"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_39",
+        "name": "Terminal Baturetno",
+        "lat": -7.98059193643646,
+        "lon": 110.93444492421135,
+        "routes": [
+            "BUS_AKDP_WAHYU_PUTRO",
+            "BUS_AKDP_PURWO_WIDODO"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_40",
+        "name": "Terminal Kartasura",
+        "lat": -7.54394566724765,
+        "lon": 110.73594639966804,
+        "routes": [
+            "BUS_AKDP_SAFARI__ROYAL_SAFARI",
+            "BUS_AKDP_TARUNA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_41",
+        "name": "Terminal Penggung (Boyolali)",
+        "lat": -7.5015310374600475,
+        "lon": 110.5768259864474,
+        "routes": [
+            "BUS_AKDP_SAFARI__ROYAL_SAFARI",
+            "BUS_AKDP_TARUNA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_42",
+        "name": "Terminal Ampel (Boyolali)",
+        "lat": -7.430224768209558,
+        "lon": 110.53301656604138,
+        "routes": [
+            "BUS_AKDP_SAFARI__ROYAL_SAFARI",
+            "BUS_AKDP_TARUNA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "AKDP_43",
+        "name": "Joglo",
+        "lat": -7.540180717522594,
+        "lon": 110.820542798379,
+        "routes": [
+            "BUS_AKDP_RELA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_44",
+        "name": "Gemolong (Sragen)",
+        "lat": -7.398406250246949,
+        "lon": 110.82635873159448,
+        "routes": [
+            "BUS_AKDP_RELA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_45",
+        "name": "Sumberlawang (Sragen)",
+        "lat": -7.3292192449956115,
+        "lon": 110.86124054553721,
+        "routes": [
+            "BUS_AKDP_RELA"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "AKDP_46",
+        "name": "Terminal Pilangsari (Sragen)",
+        "lat": -7.410488077754635,
+        "lon": 111.05079756861645,
+        "routes": [
+            "BUS_AKDP_HARTA_SANJAYA"
+        ],
+        "type": "TERMINAL"
+    }
+]
