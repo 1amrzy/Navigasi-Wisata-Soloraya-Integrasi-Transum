@@ -26,7 +26,8 @@
         "lat": -7.57175743180982,
         "lon": 110.8297470581,
         "routes": [
-            "K1"
+            "K1",
+            "TJ1"
         ],
         "type": "HALTE"
     },
@@ -119,7 +120,8 @@
         "lat": -7.5684698254206,
         "lon": 110.831727375632,
         "routes": [
-            "K3"
+            "K3",
+            "TJ1"
         ],
         "type": "HALTE"
     },
@@ -190,7 +192,8 @@
             "BUS_AKDP_SAFARI__ROYAL_SAFARI",
             "BUS_AKDP_TARUNA",
             "BUS_AKDP_RELA",
-            "BUS_AKDP_HARTA_SANJAYA"
+            "BUS_AKDP_HARTA_SANJAYA",
+            "TJ1"
         ],
         "type": "HALTE"
     },
@@ -386,7 +389,8 @@
         "lon": 110.84926336293498,
         "routes": [
             "BUS_AKDP_WAHYU_PUTRO",
-            "BUS_AKDP_PURWO_WIDODO"
+            "BUS_AKDP_PURWO_WIDODO",
+            "TJ1"
         ],
         "type": "TERMINAL"
     },
@@ -484,5 +488,615 @@
             "BUS_AKDP_HARTA_SANJAYA"
         ],
         "type": "TERMINAL"
+    },
+    {
+        "id": "TJ_001",
+        "name": "Terminal Tipe C Wonogiri",
+        "lat": -7.815562079640229,
+        "lon": 110.92273170330934,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_002",
+        "name": "Simpang Gilingan",
+        "lat": -7.553280819763625,
+        "lon": 110.82347939046731,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_003",
+        "name": "SMP N 6 Wonogiri",
+        "lat": -7.819835837771659,
+        "lon": 110.9241471030584,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_004",
+        "name": "Masjid Raya Syekh Zayed",
+        "lat": -7.554255328227843,
+        "lon": 110.82755750038368,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_005",
+        "name": "Kejaksaan Wonogiri",
+        "lat": -7.815171322457698,
+        "lon": 110.9269381116658,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_006",
+        "name": "Pasar Ngemplak",
+        "lat": -7.554638277690013,
+        "lon": 110.83000938678663,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_007",
+        "name": "SMA N 1 Wonogiri",
+        "lat": -7.815397726148052,
+        "lon": 110.92930026561028,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_008",
+        "name": "Sentra IKM Mebel Srikayu",
+        "lat": -7.5568598384995385,
+        "lon": 110.8327480058951,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_009",
+        "name": "Shelter Wonogiri",
+        "lat": -7.813477445382009,
+        "lon": 110.92755032777724,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_010",
+        "name": "Maria Regina (Purbowardayan)",
+        "lat": -7.559680097217414,
+        "lon": 110.83561446583623,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_011",
+        "name": "SD N 6 Wonogiri",
+        "lat": -7.81385455886438,
+        "lon": 110.92529716838467,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_012",
+        "name": "Jebres",
+        "lat": -7.561737278161197,
+        "lon": 110.83608602172453,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_013",
+        "name": "Giriwono",
+        "lat": -7.802946150748273,
+        "lon": 110.91336214933939,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_014",
+        "name": "Mesen",
+        "lat": -7.563043332394284,
+        "lon": 110.83528720304881,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_015",
+        "name": "Timlo",
+        "lat": -7.564390995103839,
+        "lon": 110.83441446807666,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_016",
+        "name": "Taman Selogiri",
+        "lat": -7.780076883967029,
+        "lon": 110.89171854991862,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_017",
+        "name": "Warung Pelem",
+        "lat": -7.567177904732222,
+        "lon": 110.83261712952735,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_018",
+        "name": "Nambangan",
+        "lat": -7.7614388790744755,
+        "lon": 110.8838453813436,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_019",
+        "name": "Balaikota",
+        "lat": -7.569958633989988,
+        "lon": 110.83003730511984,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_020",
+        "name": "Sendang Jlo",
+        "lat": -7.7573573792813315,
+        "lon": 110.88525926653308,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_021",
+        "name": "Kantor Pos",
+        "lat": -7.571413074085477,
+        "lon": 110.82964127716207,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_022",
+        "name": "Telekom",
+        "lat": -7.5709801231466445,
+        "lon": 110.83066016433644,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_023",
+        "name": "SMP N 1 Nguter",
+        "lat": -7.737876410396283,
+        "lon": 110.87351111043311,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_024",
+        "name": "Simpang 3 Lodji Wetan",
+        "lat": -7.571852217374508,
+        "lon": 110.83299905057132,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_025",
+        "name": "Kecamatan Nguter",
+        "lat": -7.732549891876583,
+        "lon": 110.8707014530404,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_026",
+        "name": "Luwes Sangkrah",
+        "lat": -7.573069955761935,
+        "lon": 110.83283275362523,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_027",
+        "name": "Simpang 3 Songgorunggi",
+        "lat": -7.723307412531542,
+        "lon": 110.8657662560043,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_028",
+        "name": "Pasar Kliwon",
+        "lat": -7.57577872943954,
+        "lon": 110.83225607407536,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_029",
+        "name": "Pasar Kepuh",
+        "lat": -7.709212409949904,
+        "lon": 110.85827562235347,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_030",
+        "name": "SPBU Pasar Kliwon",
+        "lat": -7.5789560305662045,
+        "lon": 110.83128863944431,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_031",
+        "name": "SMP N 4 Sukoharjo",
+        "lat": -7.7065020235170225,
+        "lon": 110.85662237003055,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_032",
+        "name": "PS Kustati",
+        "lat": -7.581122679410545,
+        "lon": 110.83049738778489,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_033",
+        "name": "Puskesmas Begajah",
+        "lat": -7.702317795357727,
+        "lon": 110.85378291653264,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_034",
+        "name": "Masjid Riyadh",
+        "lat": -7.582725081832184,
+        "lon": 110.82986984654345,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_035",
+        "name": "Sengon",
+        "lat": -7.698200510230751,
+        "lon": 110.85106999536845,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_036",
+        "name": "Perempatan Baturono",
+        "lat": -7.584420697332512,
+        "lon": 110.82869075237501,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_037",
+        "name": "Pasar Gading",
+        "lat": -7.583713345214249,
+        "lon": 110.8262680265367,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_038",
+        "name": "Dukuh",
+        "lat": -7.689470258881473,
+        "lon": 110.84589267439372,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_039",
+        "name": "SMKN 3 Surakarta",
+        "lat": -7.58491527930768,
+        "lon": 110.82522943068614,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_040",
+        "name": "Masjid Agung Sukoharjo",
+        "lat": -7.686196197683015,
+        "lon": 110.84420926653245,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_041",
+        "name": "SMA Islam",
+        "lat": -7.589165272986186,
+        "lon": 110.82358257577776,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_042",
+        "name": "PS. Ir. Soekarno",
+        "lat": -7.678451768093295,
+        "lon": 110.84116926653235,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_043",
+        "name": "Joyotakan",
+        "lat": -7.59280429991911,
+        "lon": 110.82226300483421,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_044",
+        "name": "Puri Gading",
+        "lat": -7.595240096119651,
+        "lon": 110.82133889990983,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_045",
+        "name": "PEMDA",
+        "lat": -7.666413030059915,
+        "lon": 110.8370085376964,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_046",
+        "name": "The Park",
+        "lat": -7.59987754386346,
+        "lon": 110.81884600824976,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_047",
+        "name": "SMA CT Arsa",
+        "lat": -7.6557260279356285,
+        "lon": 110.83404580330757,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_048",
+        "name": "Kecamatan Crogol",
+        "lat": -7.602242761203904,
+        "lon": 110.81883933864383,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_049",
+        "name": "RS. Nirmala Suri",
+        "lat": -7.64709210972935,
+        "lon": 110.83097179933753,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_050",
+        "name": "Pasar Grogol",
+        "lat": -7.6066652039612785,
+        "lon": 110.81886309707015,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_051",
+        "name": "Bulakrejo",
+        "lat": -7.639772389179691,
+        "lon": 110.82889145303945,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_052",
+        "name": "Bacem",
+        "lat": -7.615902772719959,
+        "lon": 110.81930926653169,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_053",
+        "name": "Pandeyan",
+        "lat": -7.634919852861877,
+        "lon": 110.82748926653177,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_054",
+        "name": "Pasar Telukan",
+        "lat": -7.61881664383687,
+        "lon": 110.82037599503869,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_055",
+        "name": "Tengklik",
+        "lat": -7.631457950076904,
+        "lon": 110.8259670800242,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_056",
+        "name": "Cluringan",
+        "lat": -7.62735858204972,
+        "lon": 110.82394489351667,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_057",
+        "name": "SMK N 1 Sukoharjo",
+        "lat": -7.668924817063659,
+        "lon": 110.83777310989957,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_058",
+        "name": "PGS",
+        "lat": -7.572974570822524,
+        "lon": 110.83090391006567,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_059",
+        "name": "Gupit",
+        "lat": -7.749923630746653,
+        "lon": 110.8863667924239,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_060",
+        "name": "Gemantar",
+        "lat": -7.773693606139129,
+        "lon": 110.88921343584654,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "TJ_061",
+        "name": "GAP Tipe A",
+        "lat": -7.792241115973588,
+        "lon": 110.89735958002593,
+        "routes": [
+            "TJ1"
+        ],
+        "type": "HALTE"
     }
 ]

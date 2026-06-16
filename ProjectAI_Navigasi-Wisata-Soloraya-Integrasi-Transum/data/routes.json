@@ -184,5 +184,12 @@
             "AKDP_46"
         ],
         "fare": 5000
+    },
+    {
+        "id": "TJ1",
+        "name": "Trans Jateng (Tirtonadi - Wonogiri)",
+        "hierarchy": "BRT",
+        "speed_kmh": 35,
+        "fare": 4000
     }
 ]

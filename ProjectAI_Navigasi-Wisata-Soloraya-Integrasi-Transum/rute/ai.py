@@ -136,9 +136,16 @@ class BusRouteSystem:
                 prev_route = came_from.get(current_id, (None, None, None))[1]
                 
                 if prev_route != route:
-                    transfer_penalty = 5 # 5 minutes penalty for transferring
-                    fare_add = route_info.get("fare", 0) # pay fare when boarding a new route
-                
+                    # Menentukan waktu penalti berdasarkan jenis rute
+                    prev_hierarchy = self.route_dict.get(prev_route, {}).get("hierarchy", "LOCAL") if prev_route else "LOCAL"
+                    curr_hierarchy = route_info.get("hierarchy", "LOCAL")
+                    
+                    if "TRAIN" in prev_hierarchy or "TRAIN" in curr_hierarchy:
+                        transfer_penalty = 15 # Pindah dari/ke kereta lebih lama (masuk stasiun)
+                    else:
+                        transfer_penalty = 5 # 5 menit penalty for transferring antar bus
+                        
+                    fare_add = route_info.get("fare", 0) # pay fare when boarding a new route                
                 tentative_g_score = g_score[current_id] + time_cost + transfer_penalty
                 tentative_dist_score = dist_score[current_id] + distance
                 tentative_fare_score = fare_score[current_id] + fare_add
