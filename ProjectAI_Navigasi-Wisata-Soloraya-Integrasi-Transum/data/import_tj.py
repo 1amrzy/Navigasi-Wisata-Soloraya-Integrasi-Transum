@@ -8,7 +8,7 @@ def clean_coord(coord_str):
         return None
     try:
         parts = coord_str.replace('"', '').split(',')
-        return float(parts[0].strip()), float(parts[1].strip())
+        return float(parts[0].strip()), float(parts[1].sgit committrip())
     except:
         return None
 

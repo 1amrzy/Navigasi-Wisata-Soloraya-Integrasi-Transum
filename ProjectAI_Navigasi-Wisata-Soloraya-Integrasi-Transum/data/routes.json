@@ -186,8 +186,15 @@
         "fare": 5000
     },
     {
-        "id": "TJ1",
-        "name": "Trans Jateng (Tirtonadi - Wonogiri)",
+        "id": "SW",
+        "name": "Trans Jateng (Solo - Wonogiri)",
+        "hierarchy": "BRT",
+        "speed_kmh": 35,
+        "fare": 4000
+    },
+    {
+        "id": "WS",
+        "name": "Trans Jateng (Wonogiri - Solo)",
         "hierarchy": "BRT",
         "speed_kmh": 35,
         "fare": 4000
