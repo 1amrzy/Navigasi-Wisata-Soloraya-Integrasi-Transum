@@ -36,10 +36,23 @@
                 <h2 class="text-xl font-semibold mb-4 text-orange">Cari Rute Optimal (A*)</h2>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium mb-1">Halte Asal:</label>
+                        <label class="block text-sm font-medium mb-2">Pilih Mode Transportasi Asal:</label>
+                        <div class="flex items-center space-x-4 mb-4 text-sm">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="mode-filter" value="ALL" class="mr-2" checked> Semua
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="mode-filter" value="STASIUN" class="mr-2"> Kereta Api
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="mode-filter" value="BUS" class="mr-2"> Bus / Transum
+                            </label>
+                        </div>
+                        
+                        <label class="block text-sm font-medium mb-1">Stasiun / Halte Asal:</label>
                         <select id="start-halte" class="w-full bg-charcoal p-2 rounded border border-aqua focus:border-orange outline-none">
                             {% for halte in haltes %}
-                                <option value="{{ halte.id }}">{{ halte.name }}</option>
+                                <option value="{{ halte.id }}" data-type="{{ halte.type }}">{{ halte.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -75,7 +88,34 @@
     <script>
         const map = L.map('map').setView([-7.5666, 110.8222], 13);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        // Menambahkan layer rel kereta api global dari OpenRailwayMap
+        L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data: &copy; OpenStreetMap | Map style: &copy; OpenRailwayMap',
+            opacity: 0.6
+        }).addTo(map);
         const routeLayer = L.layerGroup().addTo(map);
+
+        // Filter Dropdown logic
+        const startSelect = document.getElementById("start-halte");
+        const allOptions = Array.from(startSelect.options);
+        
+        document.querySelectorAll('input[name="mode-filter"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const mode = e.target.value;
+                startSelect.innerHTML = "";
+                allOptions.forEach(opt => {
+                    const type = opt.getAttribute("data-type");
+                    if (mode === "ALL") {
+                        startSelect.appendChild(opt);
+                    } else if (mode === "STASIUN" && type === "STASIUN") {
+                        startSelect.appendChild(opt);
+                    } else if (mode === "BUS" && type !== "STASIUN") {
+                        startSelect.appendChild(opt);
+                    }
+                });
+            });
+        });
 
         document.getElementById("btn-cari").addEventListener("click", () => {
             const startId = document.getElementById("start-halte").value;
@@ -133,60 +173,90 @@
         // Fungsi yang diubah menjadi async dan menggunakan OSRM untuk menggambar jalan raya
         async function gambarPeta(result) {
             routeLayer.clearLayers();
-            const busCoords = result.koordinat_path;
+            const pathData = result.koordinat_path;
             const latlngs = [];
 
             // 1. Gambar Marker & Kumpulkan Koordinat
-            busCoords.forEach((pt, idx) => {
+            pathData.forEach((pt) => {
                 latlngs.push([pt.lat, pt.lng]);
-                L.marker([pt.lat, pt.lng]).addTo(routeLayer)
-                 .bindPopup(`<b>${pt.name}</b><br>Halte BST`);
+                let popupText = `<b>${pt.name}</b><br>Halte/Stasiun`;
+                if (pt.mode === "TRAIN") popupText = `<b>${pt.name}</b><br>Stasiun Kereta`;
+                L.marker([pt.lat, pt.lng]).addTo(routeLayer).bindPopup(popupText);
             });
 
-            // 2. Ambil rute mengikuti jalan raya untuk Bus (Driving Route)
-            if (busCoords.length > 1) {
-                const coordsStr = busCoords.map(pt => `${pt.lng},${pt.lat}`).join(';');
-                const osrmBusUrl = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`;
-                
-                try {
-                    const response = await fetch(osrmBusUrl);
-                    const data = await response.json();
-                    
-                    if (data.routes && data.routes.length > 0) {
-                        const routeGeoJSON = data.routes[0].geometry;
-                        L.geoJSON(routeGeoJSON, {
-                            style: { color: '#f78837', weight: 5, opacity: 0.8 }
-                        }).addTo(routeLayer);
-                    } else {
-                        // Fallback (garis lurus) jika rute jalan gagal
-                        L.polyline(busCoords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+            // 2. Pecah path menjadi segmen berdasarkan mode transportasi
+            let segments = [];
+            let currentSegment = [];
+            let currentMode = null;
+
+            for (let i = 0; i < pathData.length; i++) {
+                const pt = pathData[i];
+                if (currentSegment.length === 0) {
+                    currentSegment.push(pt);
+                    currentMode = pt.mode;
+                } else {
+                    currentSegment.push(pt);
+                    if (pt.mode !== currentMode) {
+                        segments.push({ mode: currentMode, points: currentSegment });
+                        currentSegment = [pt];
+                        currentMode = pt.mode;
                     }
-                } catch (e) {
-                    console.error("OSRM Bus Error:", e);
-                    L.polyline(busCoords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                }
+            }
+            if (currentSegment.length > 1) {
+                segments.push({ mode: currentMode, points: currentSegment });
+            }
+
+            // 3. Render tiap segmen
+            for (const seg of segments) {
+                if (seg.points.length < 2) continue;
+                
+                const coords = seg.points;
+                
+                if (seg.mode === "TRAIN") {
+                    // Kereta Api: Garis lurus putus-putus sangat transparan (Opsi 1 + Opsi 3)
+                    // Sehingga mata pengguna akan lebih fokus pada rel kereta asli dari OpenRailwayMap di peta dasar
+                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#00ccff', weight: 3, opacity: 0.4, dashArray: '10, 15' }).addTo(routeLayer);
+                } else if (seg.mode === "WALK") {
+                    // Jalan Kaki antar halte: Garis putus-putus abu-abu
+                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#888888', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
+                } else {
+                    // Bus (LOCAL / INTER_REGIONAL): OSRM Driving Oranye
+                    const coordsStr = coords.map(pt => `${pt.lng},${pt.lat}`).join(';');
+                    const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`;
+                    try {
+                        const response = await fetch(osrmUrl);
+                        const data = await response.json();
+                        if (data.routes && data.routes.length > 0) {
+                            L.geoJSON(data.routes[0].geometry, { style: { color: '#f78837', weight: 5, opacity: 0.8 } }).addTo(routeLayer);
+                        } else {
+                            L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                        }
+                    } catch (e) {
+                        L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                    }
                 }
             }
 
-            // 3. Ambil rute jalan kaki ke tempat wisata (jika ada)
+            // 4. Rute Jalan kaki ke Tempat Wisata
             if(result.koordinat_wisata) {
                 const wisata = result.koordinat_wisata;
-                const halteTerakhir = busCoords[busCoords.length - 1];
-                
+                const halteTerakhir = pathData[pathData.length - 1];
                 latlngs.push([wisata.lat, wisata.lng]);
 
-                // Marker spesial untuk Tempat Wisata
                 L.circleMarker([wisata.lat, wisata.lng], {
                     color: '#075056', fillColor: '#075056', fillOpacity: 1, radius: 8
                 }).addTo(routeLayer).bindPopup(`<b>${wisata.name}</b><br>Tujuan Wisata`);
 
-                // Menggambar rute jalan kaki (Garis lurus / tidak mengikuti jalan raya atau rambu)
                 L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { 
                     color: '#075056', weight: 4, dashArray: '5, 10' 
                 }).addTo(routeLayer);
             }
 
-            const bounds = L.latLngBounds(latlngs);
-            map.fitBounds(bounds, { padding: [50, 50] });
+            if (latlngs.length > 0) {
+                const bounds = L.latLngBounds(latlngs);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
         }
     </script>
 </body>

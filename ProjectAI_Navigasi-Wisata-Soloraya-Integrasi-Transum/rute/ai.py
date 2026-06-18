@@ -46,32 +46,38 @@ class BusRouteSystem:
             self.route_data = json.load(f)
         
         self.route_dict = {r['id']: r for r in self.route_data}
+        self.route_dict["WALK"] = {"id": "WALK", "name": "Jalan Kaki", "speed_kmh": 5, "fare": 0, "hierarchy": "WALK"}
+        self.hierarchy_levels = {
+            "TRAIN": 1,
+            "INTER_REGIONAL": 2,
+            "LOCAL": 3,
+            "WALK": 4
+        }
         self.graph = self._build_graph()
         self.halte_dict = {h['id']: h for h in self.halte_data}
 
     def _build_graph(self) -> Dict[str, List[Tuple[str, float, str]]]:
-        """Build adjacency graph with connections between haltes on same routes"""
+        """Build adjacency graph with connections between haltes"""
         graph = {}
-        
-        # Initialize graph
         for halte in self.halte_data:
             graph[halte["id"]] = []
-        
-        # Connect haltes that share routes
+            
         for i, halte1 in enumerate(self.halte_data):
             for j, halte2 in enumerate(self.halte_data):
                 if i != j:
-                    # Check if they share any route
+                    distance = haversine(
+                        halte1["lat"], halte1["lon"],
+                        halte2["lat"], halte2["lon"]
+                    )
                     common_routes = set(halte1["routes"]) & set(halte2["routes"])
+                    
                     if common_routes:
-                        distance = haversine(
-                            halte1["lat"], halte1["lon"],
-                            halte2["lat"], halte2["lon"]
-                        )
-                        # Use the first common route (could be optimized to choose best route)
+                        # Connect with transum route
                         route = list(common_routes)[0]
                         graph[halte1["id"]].append((halte2["id"], distance, route))
-        
+                    elif distance <= 0.8: # Allow walking transfer up to 800 meters
+                        # Connect with walking edge
+                        graph[halte1["id"]].append((halte2["id"], distance, "WALK"))
         return graph
     
     def heuristic(self, halte1_id: str, halte2_id: str) -> float:

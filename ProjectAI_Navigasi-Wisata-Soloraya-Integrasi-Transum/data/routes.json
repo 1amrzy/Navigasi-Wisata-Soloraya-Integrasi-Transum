@@ -198,5 +198,64 @@
         "hierarchy": "BRT",
         "speed_kmh": 35,
         "fare": 4000
+    },
+    {
+        "id": "KA_KRL",
+        "name": "KRL Yogyakarta - Palur",
+        "hierarchy": "TRAIN",
+        "speed_kmh": 60,
+        "fare": 8000,
+        "stops": [
+            "ST_BBN",
+            "ST_SWT",
+            "ST_KT",
+            "ST_CE",
+            "ST_DL",
+            "ST_GW",
+            "ST_PWS",
+            "ST_SLO",
+            "ST_SK",
+            "ST_PL"
+        ]
+    },
+    {
+        "id": "KA_BATARA_KRESNA",
+        "name": "KA Batara Kresna",
+        "hierarchy": "TRAIN",
+        "speed_kmh": 40,
+        "fare": 4000,
+        "stops": [
+            "ST_PWS",
+            "ST_STA",
+            "ST_SKH",
+            "ST_PNT",
+            "ST_WNG"
+        ]
+    },
+    {
+        "id": "KA_BIAS",
+        "name": "KA Bandara (BIAS)",
+        "hierarchy": "TRAIN",
+        "speed_kmh": 50,
+        "fare": 15000,
+        "stops": [
+            "ST_SMO",
+            "ST_KDO",
+            "ST_SLO",
+            "ST_SK",
+            "ST_SR"
+        ]
+    },
+    {
+        "id": "KA_AGLOMERASI",
+        "name": "KA Aglomerasi",
+        "hierarchy": "TRAIN",
+        "speed_kmh": 60,
+        "fare": 50000,
+        "stops": [
+            "ST_SLO",
+            "ST_SLM",
+            "ST_TW"
+        ]
     }
 ]
