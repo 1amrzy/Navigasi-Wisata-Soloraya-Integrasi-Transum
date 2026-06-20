@@ -101,20 +101,32 @@
             document.getElementById("res-waktu").innerText = `~${result.total_time.toFixed(0)} menit`;
             document.getElementById("res-transfer").innerText = `${result.transfers} kali`;
             
-            const jarakJalan = result.walking_distance_to_attraction.toFixed(2);
-            const waktuJalan = Math.round(result.walking_distance_to_attraction * 12);
-            document.getElementById("res-jalan").innerText = `${jarakJalan} km (~${waktuJalan} menit)`;
+            const jarakAkhir = result.walking_distance_to_attraction.toFixed(2);
+            const modeAkhir = result.last_mile_mode || "Jalan Kaki";
+            const waktuAkhir = Math.round(result.last_mile_time || (result.walking_distance_to_attraction * 12));
+            const tarifAkhir = result.last_mile_fare || 0;
+            const tarifTotal = result.total_fare + tarifAkhir;
+            
+            let htmlJalan = `${modeAkhir}: ${jarakAkhir} km (~${waktuAkhir} menit)`;
+            if (tarifAkhir > 0) htmlJalan += ` - Estimasi Tarif: Rp ${tarifAkhir.toLocaleString('id-ID')}`;
+            document.getElementById("res-jalan").innerHTML = htmlJalan;
 
             const detailList = document.getElementById("res-detail-path");
             detailList.innerHTML = "";
             result.path_names.forEach((name, i) => {
                 const li = document.createElement("li");
                 if (i === result.path_names.length - 1) {
-                    li.innerHTML = `${name} <br><span class="text-orange">➔ Jalan kaki ke ${result.destination_attraction}</span>`;
+                    li.innerHTML = `${name} <br><span class="text-orange">➔ ${modeAkhir} ke ${result.destination_attraction}</span>`;
+                    
+                    // Tambahkan total biaya
+                    const liTarif = document.createElement("li");
+                    liTarif.innerHTML = `<br><span class="text-white font-bold bg-charcoal p-2 rounded">Total Estimasi Biaya (Transum + ${modeAkhir}): Rp ${tarifTotal.toLocaleString('id-ID')}</span>`;
+                    detailList.appendChild(li);
+                    detailList.appendChild(liTarif);
                 } else {
-                    li.innerText = `${name} ➔ Naik Koridor ${result.routes[i]}`;
+                    li.innerText = `${name} ➔ Naik Rute ${result.routes[i]}`;
+                    detailList.appendChild(li);
                 }
-                detailList.appendChild(li);
             });
         }
 
@@ -167,25 +179,10 @@
                     color: '#075056', fillColor: '#075056', fillOpacity: 1, radius: 8
                 }).addTo(routeLayer).bindPopup(`<b>${wisata.name}</b><br>Tujuan Wisata`);
 
-                // Mengambil rute jalan kaki (Foot Route) via OSRM
-                const osrmFootUrl = `https://router.project-osrm.org/route/v1/foot/${halteTerakhir.lng},${halteTerakhir.lat};${wisata.lng},${wisata.lat}?overview=full&geometries=geojson`;
-                
-                try {
-                    const resFoot = await fetch(osrmFootUrl);
-                    const dataFoot = await resFoot.json();
-
-                    if (dataFoot.routes && dataFoot.routes.length > 0) {
-                        const footGeoJSON = dataFoot.routes[0].geometry;
-                        L.geoJSON(footGeoJSON, {
-                            style: { color: '#075056', weight: 4, dashArray: '5, 10' }
-                        }).addTo(routeLayer);
-                    } else {
-                        L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { color: '#075056', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
-                    }
-                } catch (e) {
-                    console.error("OSRM Foot Error:", e);
-                    L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { color: '#075056', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
-                }
+                // Menggambar rute jalan kaki (Garis lurus / tidak mengikuti jalan raya atau rambu)
+                L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { 
+                    color: '#075056', weight: 4, dashArray: '5, 10' 
+                }).addTo(routeLayer);
             }
 
             const bounds = L.latLngBounds(latlngs);
