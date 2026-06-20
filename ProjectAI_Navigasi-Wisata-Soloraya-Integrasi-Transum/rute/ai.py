@@ -53,8 +53,8 @@ class BusRouteSystem:
             "LOCAL": 3,
             "WALK": 4
         }
-        self.graph = self._build_graph()
         self.halte_dict = {h['id']: h for h in self.halte_data}
+        self.graph = self._build_graph()
 
     def _build_graph(self) -> Dict[str, List[Tuple[str, float, str]]]:
         """Build adjacency graph with connections between haltes"""
@@ -62,6 +62,23 @@ class BusRouteSystem:
         for halte in self.halte_data:
             graph[halte["id"]] = []
             
+        # 1. Connect sequential haltes for TRAIN routes
+        for route in self.route_data:
+            if route.get("hierarchy") == "TRAIN" and "stops" in route:
+                stops = route["stops"]
+                route_id = route["id"]
+                for i in range(len(stops) - 1):
+                    h1_id = stops[i]
+                    h2_id = stops[i+1]
+                    if h1_id in self.halte_dict and h2_id in self.halte_dict:
+                        h1 = self.halte_dict[h1_id]
+                        h2 = self.halte_dict[h2_id]
+                        distance = haversine(h1["lat"], h1["lon"], h2["lat"], h2["lon"])
+                        # Connect both ways since trains usually go both directions
+                        graph[h1_id].append((h2_id, distance, route_id))
+                        graph[h2_id].append((h1_id, distance, route_id))
+
+        # 2. Connect buses in full mesh and walking paths
         for i, halte1 in enumerate(self.halte_data):
             for j, halte2 in enumerate(self.halte_data):
                 if i != j:
@@ -70,14 +87,18 @@ class BusRouteSystem:
                         halte2["lat"], halte2["lon"]
                     )
                     common_routes = set(halte1["routes"]) & set(halte2["routes"])
+                    bus_routes = [r for r in common_routes if self.route_dict.get(r, {}).get("hierarchy") != "TRAIN"]
                     
-                    if common_routes:
+                    if bus_routes:
                         # Connect with transum route
-                        route = list(common_routes)[0]
+                        route = bus_routes[0]
                         graph[halte1["id"]].append((halte2["id"], distance, route))
                     elif distance <= 0.8: # Allow walking transfer up to 800 meters
                         # Connect with walking edge
-                        graph[halte1["id"]].append((halte2["id"], distance, "WALK"))
+                        # Avoid adding walking edge if a train edge already exists between these close stations
+                        existing_edges = [e[0] for e in graph[halte1["id"]]]
+                        if halte2["id"] not in existing_edges:
+                            graph[halte1["id"]].append((halte2["id"], distance, "WALK"))
         return graph
     
     def heuristic(self, halte1_id: str, halte2_id: str) -> float:
@@ -228,7 +249,10 @@ class BusRouteSystem:
                 nearest_wisata = wisata["name"]
                 nearest_wisata_id = wisata["id"]
         
-        return nearest_wisata_id, nearest_wisata, min_distance
+        if nearest_wisata_id is None or nearest_wisata is None:
+            return None
+            
+        return (nearest_wisata_id, nearest_wisata, min_distance)
     
     def get_route_to_attraction(self, start_id: str, attraction_name: str) -> Optional[Dict]:
         """Find route to a specific tourist attraction"""

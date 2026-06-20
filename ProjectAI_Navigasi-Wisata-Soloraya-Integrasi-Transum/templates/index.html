@@ -87,7 +87,7 @@
 
     <script>
         const map = L.map('map').setView([-7.5666, 110.8222], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
         // Menambahkan layer rel kereta api global dari OpenRailwayMap
         L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -181,7 +181,10 @@
                 latlngs.push([pt.lat, pt.lng]);
                 let popupText = `<b>${pt.name}</b><br>Halte/Stasiun`;
                 if (pt.mode === "TRAIN") popupText = `<b>${pt.name}</b><br>Stasiun Kereta`;
-                L.marker([pt.lat, pt.lng]).addTo(routeLayer).bindPopup(popupText);
+                
+                if (!pt.is_intermediate) {
+                    L.marker([pt.lat, pt.lng]).addTo(routeLayer).bindPopup(popupText);
+                }
             });
 
             // 2. Pecah path menjadi segmen berdasarkan mode transportasi
@@ -195,11 +198,13 @@
                     currentSegment.push(pt);
                     currentMode = pt.mode;
                 } else {
-                    currentSegment.push(pt);
                     if (pt.mode !== currentMode) {
+                        currentSegment.push(pt); // Add as transfer point to end the current segment
                         segments.push({ mode: currentMode, points: currentSegment });
-                        currentSegment = [pt];
+                        currentSegment = [pt]; // Start new segment with the transfer point
                         currentMode = pt.mode;
+                    } else {
+                        currentSegment.push(pt);
                     }
                 }
             }
@@ -214,21 +219,18 @@
                 const coords = seg.points;
                 
                 if (seg.mode === "TRAIN") {
-                    // Kereta Api: Garis lurus putus-putus sangat transparan (Opsi 1 + Opsi 3)
-                    // Sehingga mata pengguna akan lebih fokus pada rel kereta asli dari OpenRailwayMap di peta dasar
-                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#00ccff', weight: 3, opacity: 0.4, dashArray: '10, 15' }).addTo(routeLayer);
+                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#0055ff', weight: 5, opacity: 0.8 }).addTo(routeLayer);
                 } else if (seg.mode === "WALK") {
-                    // Jalan Kaki antar halte: Garis putus-putus abu-abu
                     L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#888888', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
                 } else {
-                    // Bus (LOCAL / INTER_REGIONAL): OSRM Driving Oranye
                     const coordsStr = coords.map(pt => `${pt.lng},${pt.lat}`).join(';');
                     const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`;
                     try {
                         const response = await fetch(osrmUrl);
                         const data = await response.json();
                         if (data.routes && data.routes.length > 0) {
-                            L.geoJSON(data.routes[0].geometry, { style: { color: '#f78837', weight: 5, opacity: 0.8 } }).addTo(routeLayer);
+                            const osrmCoords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+                            L.polyline(osrmCoords, { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
                         } else {
                             L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
                         }
