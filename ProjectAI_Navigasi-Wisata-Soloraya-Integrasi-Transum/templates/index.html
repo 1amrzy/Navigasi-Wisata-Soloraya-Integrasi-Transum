@@ -88,12 +88,7 @@
     <script>
         const map = L.map('map').setView([-7.5666, 110.8222], 13);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
-        // Menambahkan layer rel kereta api global dari OpenRailwayMap
-        L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: 'Map data: &copy; OpenStreetMap | Map style: &copy; OpenRailwayMap',
-            opacity: 0.6
-        }).addTo(map);
+
         const routeLayer = L.layerGroup().addTo(map);
 
         // Filter Dropdown logic
