@@ -53,24 +53,50 @@ class BusRouteSystem:
         """Build adjacency graph with connections between haltes on same routes"""
         graph = {}
         
-        # Initialize graph
+        # Initialize graph and coordinates lookup
+        halte_coords = {}
         for halte in self.halte_data:
             graph[halte["id"]] = []
-        
-        # Connect haltes that share routes
-        for i, halte1 in enumerate(self.halte_data):
-            for j, halte2 in enumerate(self.halte_data):
-                if i != j:
-                    # Check if they share any route
-                    common_routes = set(halte1["routes"]) & set(halte2["routes"])
-                    if common_routes:
+            halte_coords[halte["id"]] = (halte["lat"], halte["lon"])
+            
+        # Group haltes by route for fallback mechanism
+        haltes_by_route = {}
+        for halte in self.halte_data:
+            for r in halte.get("routes", []):
+                if r not in haltes_by_route:
+                    haltes_by_route[r] = []
+                haltes_by_route[r].append(halte)
+                
+        # Build connections based on routes
+        for route in self.route_data:
+            route_id = route.get("id")
+            if not route_id:
+                continue
+                
+            # If route has a specific 'stops' array, use it for directed connections (1-way)
+            if "stops" in route and isinstance(route["stops"], list) and len(route["stops"]) > 1:
+                stops = route["stops"]
+                for i in range(len(stops) - 1):
+                    current_stop = stops[i]
+                    next_stop = stops[i+1]
+                    
+                    if current_stop in halte_coords and next_stop in halte_coords:
                         distance = haversine(
-                            halte1["lat"], halte1["lon"],
-                            halte2["lat"], halte2["lon"]
+                            halte_coords[current_stop][0], halte_coords[current_stop][1],
+                            halte_coords[next_stop][0], halte_coords[next_stop][1]
                         )
-                        # Use the first common route (could be optimized to choose best route)
-                        route = list(common_routes)[0]
-                        graph[halte1["id"]].append((halte2["id"], distance, route))
+                        # Directed edge: current -> next
+                        graph[current_stop].append((next_stop, distance, route_id))
+            else:
+                # Fallback: Fully connected undirected graph for this route (old logic)
+                haltes_on_route = haltes_by_route.get(route_id, [])
+                for i in range(len(haltes_on_route)):
+                    for j in range(len(haltes_on_route)):
+                        if i != j:
+                            h1 = haltes_on_route[i]
+                            h2 = haltes_on_route[j]
+                            distance = haversine(h1["lat"], h1["lon"], h2["lat"], h2["lon"])
+                            graph[h1["id"]].append((h2["id"], distance, route_id))
         
         return graph
     
