@@ -46,11 +46,18 @@ class BusRouteSystem:
             self.route_data = json.load(f)
         
         self.route_dict = {r['id']: r for r in self.route_data}
-        self.graph = self._build_graph()
+        self.route_dict["WALK"] = {"id": "WALK", "name": "Jalan Kaki", "speed_kmh": 5, "fare": 0, "hierarchy": "WALK"}
+        self.hierarchy_levels = {
+            "TRAIN": 1,
+            "INTER_REGIONAL": 2,
+            "LOCAL": 3,
+            "WALK": 4
+        }
         self.halte_dict = {h['id']: h for h in self.halte_data}
+        self.graph = self._build_graph()
 
     def _build_graph(self) -> Dict[str, List[Tuple[str, float, str]]]:
-        """Build adjacency graph with connections between haltes on same routes"""
+        """Build adjacency graph with connections between haltes"""
         graph = {}
         
         # Initialize graph and coordinates lookup
@@ -248,7 +255,10 @@ class BusRouteSystem:
                 nearest_wisata = wisata["name"]
                 nearest_wisata_id = wisata["id"]
         
-        return nearest_wisata_id, nearest_wisata, min_distance
+        if nearest_wisata_id is None or nearest_wisata is None:
+            return None
+            
+        return (nearest_wisata_id, nearest_wisata, min_distance)
     
     def get_route_to_attraction(self, start_id: str, attraction_name: str) -> Optional[Dict]:
         """Find route to a specific tourist attraction"""
