@@ -26,9 +26,9 @@
         "lat": -7.57175743180982,
         "lon": 110.8297470581,
         "routes": [
-            "K1",
+            "SW",
             "WS",
-            "SW"
+            "K1"
         ],
         "type": "HALTE"
     },
@@ -122,8 +122,10 @@
         "lon": 110.831727375632,
         "routes": [
             "K3",
+            "WS",
+            "K1",
             "SW",
-            "WS"
+            "FD10"
         ],
         "type": "HALTE"
     },
@@ -183,20 +185,22 @@
         "lat": -7.551298569,
         "lon": 110.8182099,
         "routes": [
-            "K1",
-            "K3",
-            "K4",
-            "K5",
-            "K6",
-            "BUS_AKDP_LANGSUNG_JAYA",
-            "BUS_AKDP_WAHYU_PUTRO",
-            "BUS_AKDP_PURWO_WIDODO",
             "BUS_AKDP_SAFARI__ROYAL_SAFARI",
-            "BUS_AKDP_TARUNA",
-            "BUS_AKDP_RELA",
             "BUS_AKDP_HARTA_SANJAYA",
+            "BUS_AKDP_RELA",
+            "BUS_AKDP_LANGSUNG_JAYA",
+            "K4",
+            "BUS_AKDP_TARUNA",
+            "FD7",
+            "K5",
+            "K3",
+            "K1",
+            "WS",
+            "BUS_AKDP_PURWO_WIDODO",
             "SW",
-            "WS"
+            "K6",
+            "K2",
+            "BUS_AKDP_WAHYU_PUTRO"
         ],
         "type": "HALTE"
     },
@@ -227,8 +231,8 @@
         "lat": -7.53171343,
         "lon": 110.7473448,
         "routes": [
-            "K5",
-            "FD7"
+            "FD7",
+            "K5"
         ],
         "type": "HALTE"
     },
@@ -258,8 +262,8 @@
         "lat": -7.567852615,
         "lon": 110.8146095,
         "routes": [
-            "FD2",
-            "FD8"
+            "FD8",
+            "FD2"
         ],
         "type": "HALTE"
     },
@@ -289,8 +293,8 @@
         "lat": -7.564166826,
         "lon": 110.8185673,
         "routes": [
-            "FD8",
-            "FD9"
+            "FD9",
+            "FD8"
         ],
         "type": "HALTE"
     },
@@ -330,8 +334,8 @@
         "lat": -7.565980353361813,
         "lon": 110.87255700504775,
         "routes": [
-            "BUS_AKDP_LANGSUNG_JAYA",
-            "BUS_AKDP_HARTA_SANJAYA"
+            "BUS_AKDP_HARTA_SANJAYA",
+            "BUS_AKDP_LANGSUNG_JAYA"
         ],
         "type": "TERMINAL"
     },
@@ -391,9 +395,9 @@
         "lat": -7.694609608640546,
         "lon": 110.84926336293498,
         "routes": [
-            "BUS_AKDP_WAHYU_PUTRO",
-            "BUS_AKDP_PURWO_WIDODO",
             "WS",
+            "BUS_AKDP_PURWO_WIDODO",
+            "BUS_AKDP_WAHYU_PUTRO",
             "SW"
         ],
         "type": "TERMINAL"
@@ -404,8 +408,8 @@
         "lat": -7.791390155407918,
         "lon": 110.90071358096273,
         "routes": [
-            "BUS_AKDP_WAHYU_PUTRO",
-            "BUS_AKDP_PURWO_WIDODO"
+            "BUS_AKDP_PURWO_WIDODO",
+            "BUS_AKDP_WAHYU_PUTRO"
         ],
         "type": "TERMINAL"
     },
@@ -415,8 +419,8 @@
         "lat": -7.98059193643646,
         "lon": 110.93444492421135,
         "routes": [
-            "BUS_AKDP_WAHYU_PUTRO",
-            "BUS_AKDP_PURWO_WIDODO"
+            "BUS_AKDP_PURWO_WIDODO",
+            "BUS_AKDP_WAHYU_PUTRO"
         ],
         "type": "TERMINAL"
     },
@@ -1163,5 +1167,199 @@
             "SW"
         ],
         "type": "HALTE"
+    },
+    {
+        "id": "ST_BBN",
+        "name": "Stasiun Brambanan",
+        "lat": -7.751685,
+        "lon": 110.499092,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SWT",
+        "name": "Stasiun Srowot",
+        "lat": -7.738361,
+        "lon": 110.53597,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_KT",
+        "name": "Stasiun Klaten",
+        "lat": -7.712615,
+        "lon": 110.603378,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_CE",
+        "name": "Stasiun Ceper",
+        "lat": -7.68265,
+        "lon": 110.650893,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_DL",
+        "name": "Stasiun Delanggu",
+        "lat": -7.632008,
+        "lon": 110.686522,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_GW",
+        "name": "Stasiun Gawok",
+        "lat": -7.58694,
+        "lon": 110.74187,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_PWS",
+        "name": "Stasiun Purwosari",
+        "lat": -7.561638,
+        "lon": 110.796695,
+        "routes": [
+            "KA_KRL",
+            "KA_BATARA_KRESNA"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SLO",
+        "name": "Stasiun Solo Balapan",
+        "lat": -7.556209,
+        "lon": 110.821034,
+        "routes": [
+            "KA_KRL",
+            "KA_BIAS",
+            "KA_AGLOMERASI"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SK",
+        "name": "Stasiun Solo Jebres",
+        "lat": -7.558661,
+        "lon": 110.842797,
+        "routes": [
+            "KA_KRL",
+            "KA_BIAS"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_PL",
+        "name": "Stasiun Palur",
+        "lat": -7.574676,
+        "lon": 110.867906,
+        "routes": [
+            "KA_KRL"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_STA",
+        "name": "Stasiun Solo Kota",
+        "lat": -7.576086,
+        "lon": 110.835777,
+        "routes": [
+            "KA_BATARA_KRESNA"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SKH",
+        "name": "Stasiun Sukoharjo",
+        "lat": -7.674987,
+        "lon": 110.836515,
+        "routes": [
+            "KA_BATARA_KRESNA"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_PNT",
+        "name": "Stasiun Pasar Nguter",
+        "lat": -7.735955,
+        "lon": 110.855018,
+        "routes": [
+            "KA_BATARA_KRESNA"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_WNG",
+        "name": "Stasiun Wonogiri",
+        "lat": -7.817757,
+        "lon": 110.923171,
+        "routes": [
+            "KA_BATARA_KRESNA"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SMO",
+        "name": "Stasiun Bandara Adi Soemarmo",
+        "lat": -7.514937,
+        "lon": 110.756653,
+        "routes": [
+            "KA_BIAS"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_KDO",
+        "name": "Stasiun Kadipiro",
+        "lat": -7.539308,
+        "lon": 110.81754,
+        "routes": [
+            "KA_BIAS"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SLM",
+        "name": "Stasiun Salem",
+        "lat": -7.387123,
+        "lon": 110.825122,
+        "routes": [
+            "KA_AGLOMERASI"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_TW",
+        "name": "Stasiun Telawa",
+        "lat": -7.228966,
+        "lon": 110.71887,
+        "routes": [
+            "KA_AGLOMERASI"
+        ],
+        "type": "STASIUN"
+    },
+    {
+        "id": "ST_SR",
+        "name": "Stasiun Sragen",
+        "lat": -7.429074,
+        "lon": 111.020584,
+        "routes": [
+            "KA_BIAS"
+        ],
+        "type": "STASIUN"
     }
 ]
