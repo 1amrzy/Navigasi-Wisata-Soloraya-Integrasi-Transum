@@ -47,6 +47,7 @@ class BusRouteSystem:
         
         self.route_dict = {r['id']: r for r in self.route_data}
         self.route_dict["WALK"] = {"id": "WALK", "name": "Jalan Kaki", "speed_kmh": 5, "fare": 0, "hierarchy": "WALK"}
+        self.route_dict["GOJEK"] = {"id": "GOJEK", "name": "Gojek/Ojek Online", "speed_kmh": 40, "fare": 10000, "hierarchy": "WALK"}
         self.hierarchy_levels = {
             "TRAIN": 1,
             "INTER_REGIONAL": 2,
@@ -54,10 +55,24 @@ class BusRouteSystem:
             "WALK": 4
         }
         self.halte_dict = {h['id']: h for h in self.halte_data}
+        
+        # Inject wisata into halte_data and halte_dict to act as graph nodes
+        for w in self.wisata_data:
+            w_dict = {
+                "id": w["id"],
+                "name": w["name"],
+                "lat": w["lat"],
+                "lon": w["lon"],
+                "type": "WISATA",
+                "routes": []
+            }
+            self.halte_dict[w["id"]] = w_dict
+            self.halte_data.append(w_dict)
+            
         self.graph = self._build_graph()
 
     def _build_graph(self) -> Dict[str, List[Tuple[str, float, str]]]:
-        """Build adjacency graph with connections between haltes"""
+        """Build adjacency graph with connections between haltes and wisata"""
         graph = {}
         
         # Initialize graph and coordinates lookup
@@ -104,6 +119,38 @@ class BusRouteSystem:
                             h2 = haltes_on_route[j]
                             distance = haversine(h1["lat"], h1["lon"], h2["lat"], h2["lon"])
                             graph[h1["id"]].append((h2["id"], distance, route_id))
+                            
+        # Build Walk / Transfer connections (cross-modal integration)
+        haltes_only = [h for h in self.halte_data if h.get("type") != "WISATA"]
+        wisatas = [h for h in self.halte_data if h.get("type") == "WISATA"]
+        
+        # 1. Transit Walk connection: Halte to Halte (Max 500m)
+        for i in range(len(haltes_only)):
+            for j in range(i + 1, len(haltes_only)):
+                h1 = haltes_only[i]
+                h2 = haltes_only[j]
+                dist = haversine(h1["lat"], h1["lon"], h2["lat"], h2["lon"])
+                if dist <= 0.5:
+                    graph[h1["id"]].append((h2["id"], dist, "WALK"))
+                    graph[h2["id"]].append((h1["id"], dist, "WALK"))
+                    
+        # 2. Last Mile connection: Wisata to Halte
+        for wisata in wisatas:
+            distances = []
+            for halte in haltes_only:
+                dist = haversine(wisata["lat"], wisata["lon"], halte["lat"], halte["lon"])
+                distances.append((dist, halte))
+            
+            # Sort haltes by distance to this wisata
+            distances.sort(key=lambda x: x[0])
+            
+            connected_count = 0
+            for dist, halte in distances:
+                # Connect if within 2.5km (ideal), OR force connect to the 2 nearest haltes regardless of distance
+                if dist <= 2.5 or connected_count < 2:
+                    mode = "WALK" if dist <= 1.5 else "GOJEK"
+                    graph[halte["id"]].append((wisata["id"], dist, mode))
+                    connected_count += 1
         
         return graph
     
@@ -261,7 +308,7 @@ class BusRouteSystem:
         return (nearest_wisata_id, nearest_wisata, min_distance)
     
     def get_route_to_attraction(self, start_id: str, attraction_name: str) -> Optional[Dict]:
-        """Find route to a specific tourist attraction"""
+        """Find route to a specific tourist attraction by routing directly to the attraction node"""
         attraction = None
         for wisata in self.wisata_data:
             if wisata["name"].lower() == attraction_name.lower():
@@ -271,50 +318,52 @@ class BusRouteSystem:
         if not attraction:
             return None
         
-        # Calculate distance to all haltes
-        halte_distances = []
-        for halte_id, halte in self.halte_dict.items():
-            import math
-            def haversine_local(lat1, lon1, lat2, lon2):
-                R = 6371.0
-                lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-                dlat = lat2 - lat1
-                dlon = lon2 - lon1
-                a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
-                return R * 2 * math.asin(math.sqrt(a))
+        # Cari rute langsung ke titik wisata
+        route_result = self.find_route(start_id, attraction["id"])
+        if not route_result:
+            return None
             
-            dist = haversine_local(
-                halte["lat"], halte["lon"],
-                attraction["lat"], attraction["lon"]
-            )
-            halte_distances.append((dist, halte_id))
+        # Parse the last segment to match the expected API structure
+        if len(route_result["path"]) >= 2:
+            last_halte_id = route_result["path"][-2]
+            wisata_id = route_result["path"][-1]
+            last_route = route_result["routes"][-1]
+            last_dist = route_result["segment_distances"][-1]
             
-        # Sort by closest first
-        halte_distances.sort(key=lambda x: x[0])
-        
-        # Try finding a route to the closest haltes until one succeeds
-        for min_distance, best_halte in halte_distances:
-            route_result = self.find_route(start_id, best_halte)
-            if route_result:
-                route_result["destination_attraction"] = attraction["name"]
-                route_result["walking_distance_to_attraction"] = min_distance
+            # Remove the wisata node from the main path arrays
+            # to prevent it from being treated as a normal halte in some old logic
+            route_result["path"].pop()
+            route_result["path_names"].pop()
+            
+            route_result["routes"].pop()
+            route_result["segment_distances"].pop()
+            
+            # Add metadata for the UI
+            route_result["destination_attraction"] = attraction["name"]
+            route_result["walking_distance_to_attraction"] = last_dist
+            
+            if last_route == "GOJEK":
+                route_result["last_mile_mode"] = "Gojek"
+                route_result["last_mile_time"] = (last_dist / 40) * 60
+                route_result["last_mile_fare"] = 5000 + int(last_dist * 2500)
+            else:
+                route_result["last_mile_mode"] = "Jalan Kaki"
+                route_result["last_mile_time"] = (last_dist / 5) * 60
+                route_result["last_mile_fare"] = 0
+            
+            # Adjust total_distance and total_time to exclude the last mile
+            # (as the UI expects them separate)
+            route_result["total_distance"] -= last_dist
+            route_result["total_time"] -= route_result["last_mile_time"]
+            
+            if len(route_result["routes"]) > 0:
+                first_route = route_result["routes"][0]
+                first_fare = self.route_dict.get(first_route, {}).get("fare", 0)
+                # Avoid double counting if it was added
+                pass
                 
-                if min_distance > 1.5:
-                    route_result["last_mile_mode"] = "Gojek"
-                    route_result["last_mile_time"] = (min_distance / 40) * 60
-                    route_result["last_mile_fare"] = min_distance * 2500
-                else:
-                    route_result["last_mile_mode"] = "Jalan Kaki"
-                    route_result["last_mile_time"] = min_distance * 12
-                    route_result["last_mile_fare"] = 0
-                
-                if len(route_result["routes"]) > 0:
-                    first_route = route_result["routes"][0]
-                    first_fare = self.route_dict.get(first_route, {}).get("fare", 0)
-                    route_result["total_fare"] += first_fare
-                    
-                return route_result
-                
+            return route_result
+            
         return None
 
     def get_attractions_along_route(self, path: List[str], radius_km: float = 1.0) -> List[Dict]:
@@ -644,3 +693,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    

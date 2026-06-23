@@ -1,5 +1,46 @@
 [
     {
+        "id": "H001",
+        "name": "UNSA",
+        "lat": -7.565920965696957,
+        "lon": 110.86483955617842,
+        "routes": [
+            "K1",
+            "K4",
+            "FD10",
+            "FD2"
+        ],
+        "type": "HALTE"
+    },
+    {
+        "id": "H30",
+        "name": "Terminal Palur",
+        "lat": -7.565980353361813,
+        "lon": 110.87255700504775,
+        "routes": [
+            "K1",
+            "K4",
+            "FD2",
+            "FD10",
+            "BUS_AKDP_HARTA_SANJAYA",
+            "BUS_AKDP_LANGSUNG_JAYA"
+        ],
+        "type": "TERMINAL"
+    },
+    {
+        "id": "H002",
+        "name": "Plaza Palur",
+        "lat": -7.56834763748929,
+        "lon": 110.87350937547741,
+        "routes": [
+            "K1",
+            "K4",
+            "FD10",
+            "FD2"
+        ],
+        "type": "HALTE"
+    },
+    {
         "id": "H01",
         "name": "Jurug (Solo Safari)",
         "lat": -7.56513474408024,
@@ -183,10 +224,6 @@
             "K4",
             "BUS_AKDP_TARUNA",
             "FD7",
-            "K5",
-            "K3",
-            "K1",
-            "WS",
             "BUS_AKDP_PURWO_WIDODO",
             "BUS_AKDP_SAFARI__ROYAL_SAFARI",
             "BUS_AKDP_TARUNA",
@@ -320,17 +357,6 @@
             "BUS_AKDP_LANGSUNG_JAYA"
         ],
         "type": "HALTE"
-    },
-    {
-        "id": "AKDP_31",
-        "name": "Terminal Palur",
-        "lat": -7.565980353361813,
-        "lon": 110.87255700504775,
-        "routes": [
-            "BUS_AKDP_HARTA_SANJAYA",
-            "BUS_AKDP_LANGSUNG_JAYA"
-        ],
-        "type": "TERMINAL"
     },
     {
         "id": "AKDP_32",
@@ -700,7 +726,8 @@
         "lat": -7.571413074085477,
         "lon": 110.82964127716207,
         "routes": [
-            "TJ_WNG"
+            "TJ_WNG",
+            "K3"
         ],
         "type": "HALTE"
     },
