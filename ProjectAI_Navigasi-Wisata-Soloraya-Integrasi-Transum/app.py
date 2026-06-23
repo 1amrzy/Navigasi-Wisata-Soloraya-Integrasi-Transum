@@ -17,8 +17,10 @@ except Exception:
 @app.route("/")
 def home():
     # Mengirim data halte DAN data wisata ke frontend index.html
+    # Filter out WISATA from haltes to prevent duplicates in the Start dropdown
+    pure_haltes = [h for h in bus_system.halte_data if h.get("type") != "WISATA"]
     return render_template('index.html', 
-                           haltes=bus_system.halte_data, 
+                           haltes=pure_haltes, 
                            wisatas=bus_system.wisata_data)
 
 @app.route("/api/cari_rute_wisata", methods=["POST"])
