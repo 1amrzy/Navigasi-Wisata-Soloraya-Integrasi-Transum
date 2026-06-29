@@ -3,7 +3,7 @@
         "id": "K1",
         "name": "Koridor 1",
         "hierarchy": "LOCAL",
-        "speed_kmh": 30,
+        "speed_kmh": 25,
         "stops": [
             "H001",
             "H30",
@@ -26,13 +26,14 @@
             "H002",
             "H30",
             "H001"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "K3",
         "name": "Koridor 3",
         "hierarchy": "LOCAL",
-        "speed_kmh": 30,
+        "speed_kmh": 25,
         "stops": [
             "H03",
             "H09",
@@ -49,13 +50,14 @@
             "H11",
             "H09",
             "H03"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "K4",
         "name": "Koridor 4",
         "hierarchy": "LOCAL",
-        "speed_kmh": 30,
+        "speed_kmh": 25,
         "stops": [
             "H001",
             "H30",
@@ -68,37 +70,40 @@
             "H002",
             "H30",
             "H001"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "K5",
         "name": "Koridor 5",
         "hierarchy": "LOCAL",
-        "speed_kmh": 30,
+        "speed_kmh": 25,
         "stops": [
             "H19",
             "H20",
             "H21",
             "H20",
             "H19"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "K6",
         "name": "Koridor 6",
         "hierarchy": "LOCAL",
-        "speed_kmh": 30,
+        "speed_kmh": 25,
         "stops": [
             "H22",
             "H23",
             "H22"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "FD2",
         "name": "Feeder 2",
         "hierarchy": "LOCAL",
-        "speed_kmh": 25,
+        "speed_kmh": 20,
         "stops": [
             "H001",
             "H30",
@@ -111,24 +116,26 @@
             "H002",
             "H30",
             "H001"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "FD7",
         "name": "Feeder 7",
         "hierarchy": "LOCAL",
-        "speed_kmh": 25,
+        "speed_kmh": 20,
         "stops": [
             "H18",
             "H21",
             "H18"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "FD8",
         "name": "Feeder 8",
         "hierarchy": "LOCAL",
-        "speed_kmh": 25,
+        "speed_kmh": 20,
         "stops": [
             "H06",
             "H07",
@@ -141,24 +148,26 @@
             "H19",
             "H07",
             "H06"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "FD9",
         "name": "Feeder 9",
         "hierarchy": "LOCAL",
-        "speed_kmh": 25,
+        "speed_kmh": 20,
         "stops": [
             "H26",
             "H27",
             "H26"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "FD10",
         "name": "Feeder 10",
         "hierarchy": "LOCAL",
-        "speed_kmh": 25,
+        "speed_kmh": 20,
         "stops": [
             "H001",
             "H30",
@@ -169,7 +178,8 @@
             "H002",
             "H30",
             "H001"
-        ]
+        ],
+        "fare": 3700
     },
     {
         "id": "",
@@ -441,8 +451,8 @@
         "id": "KA_KRL",
         "name": "KRL Commuter Line",
         "hierarchy": "TRAIN",
-        "speed_kmh": 60,
-        "fare": 8000,
+        "speed_kmh": 50,
+        "fare": 3700,
         "stops": [
             "ST_BBN",
             "ST_SWT",
@@ -469,8 +479,8 @@
         "id": "KA_BIAS",
         "name": "KA Bandara Internasional Adi Soemarmo",
         "hierarchy": "TRAIN",
-        "speed_kmh": 60,
-        "fare": 15000,
+        "speed_kmh": 50,
+        "fare": 3700,
         "stops": [
             "ST_SMO",
             "ST_KDO",
@@ -487,8 +497,8 @@
         "id": "KA_BATARA_KRESNA",
         "name": "KA Batara Kresna",
         "hierarchy": "TRAIN",
-        "speed_kmh": 40,
-        "fare": 4000,
+        "speed_kmh": 30,
+        "fare": 3700,
         "stops": [
             "ST_PWS",
             "ST_STA",
@@ -505,8 +515,8 @@
         "id": "KA_AGLOMERASI",
         "name": "KA Aglomerasi (Banyubiru / Joglosemarkerto)",
         "hierarchy": "TRAIN",
-        "speed_kmh": 70,
-        "fare": 40000,
+        "speed_kmh": 50,
+        "fare": 3700,
         "stops": [
             "ST_TW",
             "ST_SLM",

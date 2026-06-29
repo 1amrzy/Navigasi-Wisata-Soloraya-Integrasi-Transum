@@ -489,7 +489,7 @@ def interactive_route_planner():
     """Interactive route planning system"""
     bus_system = BusRouteSystem()
     
-    print("🚌 === SISTEM PERENCANAAN RUTE BUS SOLO === 🚌")
+    print(" === SISTEM PERENCANAAN RUTE BUS SOLO === 🚌")
     print("Menggunakan Algoritma A* untuk rute optimal\n")
     
     while True:
@@ -510,7 +510,7 @@ def interactive_route_planner():
             break
         
         elif choice == "1":
-            print("\n🗺️  PENCARIAN RUTE ANTAR HALTE")
+            print("\n  PENCARIAN RUTE ANTAR HALTE")
             print("-" * 40)
             
             # Input start halte
@@ -518,7 +518,7 @@ def interactive_route_planner():
             start_matches = search_halte(bus_system, start_query)
             
             if not start_matches:
-                print("❌ Halte asal tidak ditemukan!")
+                print(" Halte asal tidak ditemukan!")
                 continue
             elif len(start_matches) > 1:
                 print("Beberapa halte ditemukan:")
@@ -528,7 +528,7 @@ def interactive_route_planner():
                     idx = int(input("Pilih nomor: ")) - 1
                     start_halte = start_matches[idx]
                 except (ValueError, IndexError):
-                    print("❌ Pilihan tidak valid!")
+                    print(" Pilihan tidak valid!")
                     continue
             else:
                 start_halte = start_matches[0]
@@ -538,7 +538,7 @@ def interactive_route_planner():
             end_matches = search_halte(bus_system, end_query)
             
             if not end_matches:
-                print("❌ Halte tujuan tidak ditemukan!")
+                print(" Halte tujuan tidak ditemukan!")
                 continue
             elif len(end_matches) > 1:
                 print("Beberapa halte ditemukan:")
@@ -548,7 +548,7 @@ def interactive_route_planner():
                     idx = int(input("Pilih nomor: ")) - 1
                     end_halte = end_matches[idx]
                 except (ValueError, IndexError):
-                    print("❌ Pilihan tidak valid!")
+                    print(" Pilihan tidak valid!")
                     continue
             else:
                 end_halte = end_matches[0]
@@ -557,7 +557,7 @@ def interactive_route_planner():
             result = bus_system.find_route(start_halte["id"], end_halte["id"])
             
             if result:
-                print(f"\n🎯 RUTE DITEMUKAN!")
+                print(f"\n RUTE DITEMUKAN!")
                 print("=" * 50)
                 print(f"Dari: {result['path_names'][0]}")
                 print(f"Ke: {result['path_names'][-1]}")
@@ -565,7 +565,7 @@ def interactive_route_planner():
                 print(f"Waktu Tempuh: ~{result['total_time']:.0f} menit")
                 print(f"Jumlah Transfer: {result['transfers']}")
                 
-                print(f"\n📍 RUTE DETAIL:")
+                print(f"\n RUTE DETAIL:")
                 for i, (halte_name, route) in enumerate(zip(result['path_names'], result['routes'] + [''])):
                     if i == len(result['path_names']) - 1:
                         print(f"  {i+1}. {halte_name} (TUJUAN)")
@@ -574,31 +574,31 @@ def interactive_route_planner():
                 
                 # Get route analysis
                 analysis = bus_system.get_route_analysis(result)
-                print(f"\n📊 ANALISIS RUTE:")
+                print(f"\n ANALISIS RUTE:")
                 print(f"Efisiensi: {analysis['efficiency']}")
                 print(f"Kompleksitas: {analysis['complexity']}")
                 print(f"Estimasi Biaya: Rp {analysis['cost_estimate']:,}")
                 
-                print(f"\n💡 REKOMENDASI:")
+                print(f"\n REKOMENDASI:")
                 for rec in analysis['recommendations']:
                     print(f"  {rec}")
                 
-                print(f"\n📋 PERTIMBANGAN:")
+                print(f"\n PERTIMBANGAN:")
                 for cons in analysis['considerations']:
                     print(f"  • {cons}")
                 
                 # Find attractions along route
                 attractions = bus_system.get_attractions_along_route(result['path'])
                 if attractions:
-                    print(f"\n🏛️  TEMPAT WISATA DI SEPANJANG RUTE:")
+                    print(f"\n  TEMPAT WISATA DI SEPANJANG RUTE:")
                     for attr in attractions[:5]:  # Show top 5
                         print(f"  • {attr['attraction']} (dekat {attr['near_halte']})")
                         print(f"    Jarak jalan kaki: {attr['distance_km']:.1f} km (~{attr['walking_time_min']:.0f} menit)")
             else:
-                print("❌ Tidak ada rute yang ditemukan!")
+                print(" Tidak ada rute yang ditemukan!")
         
         elif choice == "2":
-            print("\n🏛️  PENCARIAN RUTE KE TEMPAT WISATA")
+            print("\n  PENCARIAN RUTE KE TEMPAT WISATA")
             print("-" * 40)
             
             # Show popular attractions
@@ -614,7 +614,7 @@ def interactive_route_planner():
             start_matches = search_halte(bus_system, start_query)
             
             if not start_matches:
-                print("❌ Halte asal tidak ditemukan!")
+                print(" Halte asal tidak ditemukan!")
                 continue
             elif len(start_matches) > 1:
                 print("Beberapa halte ditemukan:")
@@ -624,7 +624,7 @@ def interactive_route_planner():
                     idx = int(input("Pilih nomor: ")) - 1
                     start_halte = start_matches[idx]
                 except (ValueError, IndexError):
-                    print("❌ Pilihan tidak valid!")
+                    print(" Pilihan tidak valid!")
                     continue
             else:
                 start_halte = start_matches[0]
@@ -632,7 +632,7 @@ def interactive_route_planner():
             result = bus_system.get_route_to_attraction(start_halte["id"], attraction_name)
             
             if result:
-                print(f"\n🎯 RUTE KE {result['destination_attraction']} DITEMUKAN!")
+                print(f"\n RUTE KE {result['destination_attraction']} DITEMUKAN!")
                 print("=" * 50)
                 print(f"Dari: {result['path_names'][0]}")
                 print(f"Ke Halte: {result['path_names'][-1]}")
@@ -643,7 +643,7 @@ def interactive_route_planner():
                 print(f"Transfer: {result['transfers']} kali")
                 
                 # Show detailed route
-                print(f"\n📍 RUTE DETAIL:")
+                print(f"\n RUTE DETAIL:")
                 for i, (halte_name, route) in enumerate(zip(result['path_names'], result['routes'] + [''])):
                     if i == len(result['path_names']) - 1:
                         print(f"  {i+1}. {halte_name} → Jalan kaki ke {result['destination_attraction']}")
@@ -652,7 +652,7 @@ def interactive_route_planner():
                 
                 # Analysis
                 analysis = bus_system.get_route_analysis(result)
-                print(f"\n📊 ANALISIS:")
+                print(f"\n ANALISIS:")
                 print(f"Efisiensi: {analysis['efficiency']}")
                 print(f"Kompleksitas: {analysis['complexity']}")
                 
@@ -662,7 +662,7 @@ def interactive_route_planner():
                 print(f"Total Waktu: ~{total_time:.0f} menit")
                 
             else:
-                print("❌ Rute ke tempat wisata tidak ditemukan!")
+                print(" Rute ke tempat wisata tidak ditemukan!")
         
         elif choice == "3":
             display_halte_list(bus_system)
@@ -671,7 +671,7 @@ def interactive_route_planner():
             display_attraction_list(bus_system)
         
         elif choice == "5":
-            print("\n🔍 PENCARIAN HALTE")
+            print("\n PENCARIAN HALTE")
             print("-" * 40)
             query = input("Masukkan nama atau ID halte: ").strip()
             matches = search_halte(bus_system, query)
@@ -682,10 +682,10 @@ def interactive_route_planner():
                     routes_str = ", ".join(halte["routes"])
                     print(f"  • {halte['id']}: {halte['name']} (Rute: {routes_str})")
             else:
-                print("❌ Tidak ada halte yang ditemukan!")
+                print("s[]p  Tidak ada halte yang ditemukan!")
         
         else:
-            print("❌ Pilihan tidak valid!")
+            print(" Pilihan tidak valid!")
 
 def main():
     # Run interactive route planner
