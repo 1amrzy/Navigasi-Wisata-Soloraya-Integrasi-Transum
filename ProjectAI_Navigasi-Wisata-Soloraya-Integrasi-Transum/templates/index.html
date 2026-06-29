@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigasi Wisata BST Solo</title>
+    <title>Navigasi Wisata Solo Raya</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+          darkMode: 'class',
           theme: {
             extend: {
-                colors: { cloud: '#dfe4e5', orange: '#f78837', charcoal: { lighter: '#3D5A66', DEFAULT: '#243037', darker: '#0F1A1F' }, aqua: '#075056' }
+                fontFamily: { sans: ['Inter', 'sans-serif'] },
+                colors: {
+                    dark: '#0a0a0a',
+                    panel: '#171717',
+                    borderLine: '#333333',
+                    lightBg: '#f3f4f6',
+                    lightPanel: '#ffffff',
+                    lightBorder: '#e5e7eb',
+                    brandPurple: '#9333ea', // Ungu
+                    accentMuted: '#a3a3a3'
+                }
             }
           }
         }
@@ -17,78 +29,162 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        #map { height: 500px; width: 100%; border-radius: 0.5rem; z-index: 1; }
-        .leaflet-popup-content-wrapper, .leaflet-popup-tip { background-color: #243037; color: #dfe4e5; }
+        body { font-family: 'Inter', sans-serif; }
+        #map { height: 650px; width: 100%; border-radius: 1rem; z-index: 1; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #333; }
+        
+        .leaflet-popup-content-wrapper, .leaflet-popup-tip { 
+            background-color: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; 
+        }
+        .dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip { 
+            background-color: #171717; color: #e5e5e5; border: 1px solid #333; 
+        }
     </style>
 </head>
-<body class="bg-charcoal min-h-screen text-cloud">
+<body class="min-h-screen flex flex-col bg-lightBg dark:bg-dark text-gray-800 dark:text-gray-200 transition-colors duration-300">
     
-    <nav class="bg-charcoal-darker p-6 shadow-lg">
+    <nav class="bg-lightPanel dark:bg-panel border-b border-lightBorder dark:border-borderLine px-8 py-4 transition-colors duration-300">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="hover:text-orange text-xl font-bold transition">Pemilihan Objek Wisata BST</a>
+            <a href="/" class="text-gray-900 dark:text-white text-2xl font-bold tracking-tight">SolNav<span class="text-brandPurple">.</span></a>
+            
+            <!-- Dark Mode Toggle Button -->
+            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 border border-gray-200 dark:border-gray-600 shadow-sm transition-all">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.336a1 1 0 011.415 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.636 15.636a1 1 0 010 1.415l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.415 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-1.336a1 1 0 01-1.415 0l-.707-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm1.336-4.22a1 1 0 010-1.415l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.415 0zM10 15a5 5 0 100-10 5 5 0 000 10z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <div class="bg-charcoal-lighter p-6 rounded-lg shadow-md h-fit">
-                <h2 class="text-xl font-semibold mb-4 text-orange">Cari Rute Optimal (A*)</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Pilih Mode Transportasi Asal:</label>
-                        <div class="flex items-center space-x-4 mb-4 text-sm">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="mode-filter" value="ALL" class="mr-2" checked> Semua
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="mode-filter" value="STASIUN" class="mr-2"> Kereta Api
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="mode-filter" value="BUS" class="mr-2"> Bus / Transum
-                            </label>
+            <!-- Left Sidebar -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <!-- Search Panel -->
+                <div class="bg-lightPanel dark:bg-panel p-6 rounded-2xl border border-lightBorder dark:border-borderLine shadow-xl transition-colors duration-300">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white tracking-tight">Cari Rute Optimal (A*)</h2>
+                    
+                    <div class="space-y-5">
+                        <!-- Transport Mode -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-accentMuted mb-3">Pilih Mode Transportasi Asal:</label>
+                            <div class="flex items-center space-x-6 text-sm">
+                                <label class="flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-brandPurple dark:hover:text-white transition-colors">
+                                    <input type="radio" name="mode-filter" value="ALL" class="mr-2 accent-brandPurple w-4 h-4 cursor-pointer" checked> Semua
+                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-brandPurple dark:hover:text-white transition-colors">
+                                    <input type="radio" name="mode-filter" value="STASIUN" class="mr-2 accent-brandPurple w-4 h-4 cursor-pointer"> Kereta Api
+                                </label>
+                                <label class="flex items-center cursor-pointer text-gray-700 dark:text-gray-300 hover:text-brandPurple dark:hover:text-white transition-colors">
+                                    <input type="radio" name="mode-filter" value="BUS" class="mr-2 accent-brandPurple w-4 h-4 cursor-pointer"> Bus/Transum
+                                </label>
+                            </div>
                         </div>
                         
-                        <label class="block text-sm font-medium mb-1">Stasiun / Halte Asal:</label>
-                        <select id="start-halte" class="w-full bg-charcoal p-2 rounded border border-aqua focus:border-orange outline-none">
-                            {% for halte in haltes %}
-                                <option value="{{ halte.id }}" data-type="{{ halte.type }}">{{ halte.name }}</option>
-                            {% endfor %}
-                        </select>
+                        <!-- Start Point -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-accentMuted mb-2">Stasiun / Halte Asal:</label>
+                            <select id="start-halte" class="w-full bg-white dark:bg-dark text-gray-900 dark:text-white p-3 rounded-xl border border-gray-300 dark:border-borderLine focus:border-brandPurple dark:focus:border-white focus:ring-1 focus:ring-brandPurple dark:focus:ring-white outline-none transition-all cursor-pointer">
+                                {% for halte in haltes %}
+                                    <option value="{{ halte.id }}" data-type="{{ halte.type }}">{{ halte.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Destination Point -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-accentMuted mb-2">Tempat Wisata Tujuan:</label>
+                            <select id="end-wisata" class="w-full bg-white dark:bg-dark text-gray-900 dark:text-white p-3 rounded-xl border border-gray-300 dark:border-borderLine focus:border-brandPurple dark:focus:border-white focus:ring-1 focus:ring-brandPurple dark:focus:ring-white outline-none transition-all cursor-pointer">
+                                {% for wisata in wisatas %}
+                                    <option value="{{ wisata.name }}">{{ wisata.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button id="btn-cari" class="w-full bg-brandPurple dark:bg-white text-white dark:text-black hover:bg-purple-700 dark:hover:bg-gray-200 font-semibold py-3 px-4 rounded-xl transition-all shadow-lg active:scale-95 mt-4">
+                            Hitung Rute
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Tempat Wisata Tujuan:</label>
-                        <select id="end-wisata" class="w-full bg-charcoal p-2 rounded border border-aqua focus:border-orange outline-none">
-                            {% for wisata in wisatas %}
-                                <option value="{{ wisata.name }}">{{ wisata.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button id="btn-cari" class="w-full bg-orange hover:bg-opacity-90 text-charcoal-darker font-bold py-2 px-4 rounded transition">Hitung Rute</button>
                 </div>
 
-                <div id="hasil-rute" class="mt-6 border-t border-aqua pt-4 hidden">
-                    <h3 class="text-lg font-bold text-orange mb-2">Estimasi Perjalanan:</h3>
-                    <p class="text-sm">Jarak Bus: <span id="res-jarak" class="font-semibold">-</span></p>
-                    <p class="text-sm">Waktu Bus: <span id="res-waktu" class="font-semibold">-</span></p>
-                    <p class="text-sm">Transit: <span id="res-transfer" class="font-semibold">-</span></p>
-                    <p class="text-sm text-orange mt-2">Jalan Kaki ke Tujuan: <span id="res-jalan" class="font-semibold">-</span></p>
+                <!-- Results Panel -->
+                <div id="hasil-rute" class="bg-lightPanel dark:bg-panel p-6 rounded-2xl border border-lightBorder dark:border-borderLine shadow-xl hidden transition-all duration-300">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 border-b border-lightBorder dark:border-borderLine pb-3">Estimasi Perjalanan</h3>
+                    <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                        <div class="flex justify-between"><span>Jarak Rute Utama:</span> <span id="res-jarak" class="text-gray-900 dark:text-white font-medium">-</span></div>
+                        <div class="flex justify-between"><span>Waktu Rute Utama:</span> <span id="res-waktu" class="text-gray-900 dark:text-white font-medium">-</span></div>
+                        <div class="flex justify-between"><span>Transit:</span> <span id="res-transfer" class="text-gray-900 dark:text-white font-medium">-</span></div>
+                    </div>
                     
-                    <h3 class="text-md font-bold mt-4 text-orange">Panduan Rute:</h3>
-                    <ol id="res-detail-path" class="list-decimal list-inside text-sm space-y-1 mt-2"></ol>
+                    <div class="mt-4 p-3 bg-gray-50 dark:bg-dark rounded-xl border border-lightBorder dark:border-borderLine text-sm">
+                        <p class="text-gray-500 dark:text-accentMuted mb-1">Penyelesaian Rute ke Tujuan:</p>
+                        <p id="res-jalan" class="text-gray-900 dark:text-white font-medium">-</p>
+                    </div>
+                    
+                    <h3 class="text-md font-semibold text-gray-900 dark:text-white mt-6 mb-3">Panduan Rute</h3>
+                    <ul id="res-detail-path" class="relative border-l border-gray-300 dark:border-borderLine ml-3 space-y-4 text-sm text-gray-600 dark:text-gray-300 pb-2"></ul>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-charcoal-darker p-4 rounded-lg shadow-md">
-                <div id="map"></div>
+            <!-- Right Map Area -->
+            <div class="lg:col-span-8">
+                <div class="bg-lightPanel dark:bg-panel p-2 rounded-2xl border border-lightBorder dark:border-borderLine shadow-xl transition-colors duration-300">
+                    <div id="map"></div>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
-        const map = L.map('map').setView([-7.5666, 110.8222], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+        // --- Dark Mode / Light Mode Logic ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
 
+        // Check preference
+        let isDark = false;
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            isDark = true;
+        }
+
+        const map = L.map('map').setView([-7.5666, 110.8222], 13);
+        let currentTileLayer = null;
+
+        function setMapTheme(dark) {
+            if (currentTileLayer) map.removeLayer(currentTileLayer);
+            const tileUrl = dark 
+                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+            currentTileLayer = L.tileLayer(tileUrl).addTo(map);
+        }
+
+        function updateTheme() {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+            setMapTheme(isDark);
+        }
+
+        updateTheme(); // Init
+
+        themeToggleBtn.addEventListener('click', function() {
+            isDark = !isDark;
+            localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+            updateTheme();
+        });
+
+
+        // --- Routing Logic ---
         const routeLayer = L.layerGroup().addTo(map);
 
         // Filter Dropdown logic
@@ -115,6 +211,10 @@
         document.getElementById("btn-cari").addEventListener("click", () => {
             const startId = document.getElementById("start-halte").value;
             const wisataName = document.getElementById("end-wisata").value; 
+            
+            const btn = document.getElementById("btn-cari");
+            btn.innerText = "Menghitung...";
+            btn.disabled = true;
 
             fetch("/api/cari_rute_wisata", {
                 method: "POST",
@@ -123,10 +223,16 @@
             })
             .then(res => res.json())
             .then(data => {
+                btn.innerText = "Hitung Rute";
+                btn.disabled = false;
                 if (data.status === "success") {
                     tampilkanHasil(data.result);
                     gambarPeta(data.result);
                 } else alert(data.message);
+            })
+            .catch(() => {
+                btn.innerText = "Hitung Rute";
+                btn.disabled = false;
             });
         });
 
@@ -143,35 +249,45 @@
             const tarifTotal = result.total_fare + tarifAkhir;
             
             let htmlJalan = `${modeAkhir}: ${jarakAkhir} km (~${waktuAkhir} menit)`;
-            if (tarifAkhir > 0) htmlJalan += ` - Estimasi Tarif: Rp ${tarifAkhir.toLocaleString('id-ID')}`;
+            if (tarifAkhir > 0) htmlJalan += `<br><span class="text-xs text-gray-500 dark:text-accentMuted mt-1 block">Estimasi Tarif Ojek: Rp ${tarifAkhir.toLocaleString('id-ID')}</span>`;
             document.getElementById("res-jalan").innerHTML = htmlJalan;
 
             const detailList = document.getElementById("res-detail-path");
             detailList.innerHTML = "";
             result.path_names.forEach((name, i) => {
                 const li = document.createElement("li");
+                li.className = "ml-6 mt-4 relative";
+                
+                const dot = document.createElement("div");
+                dot.className = "absolute w-3 h-3 bg-gray-300 dark:bg-borderLine rounded-full -left-[30px] top-1.5 border-2 border-white dark:border-panel";
+                li.appendChild(dot);
+                
+                const content = document.createElement("div");
                 if (i === result.path_names.length - 1) {
-                    li.innerHTML = `${name} <br><span class="text-orange">➔ ${modeAkhir} ke ${result.destination_attraction}</span>`;
+                    dot.classList.remove('bg-gray-300', 'dark:bg-borderLine');
+                    dot.classList.add('bg-brandPurple', 'dark:bg-white');
+                    content.innerHTML = `<span class="text-gray-900 dark:text-white font-medium">${name}</span><br><span class="text-gray-500 dark:text-accentMuted text-xs mt-1 block">➔ Lanjut ${modeAkhir} ke ${result.destination_attraction}</span>`;
                     
-                    // Tambahkan total biaya
                     const liTarif = document.createElement("li");
-                    liTarif.innerHTML = `<br><span class="text-white font-bold bg-charcoal p-2 rounded">Total Estimasi Biaya (Transum + ${modeAkhir}): Rp ${tarifTotal.toLocaleString('id-ID')}</span>`;
+                    liTarif.className = "ml-2 mt-6 list-none";
+                    liTarif.innerHTML = `<div class="bg-gray-100 dark:bg-white text-gray-900 dark:text-black font-bold p-3 rounded-lg text-center shadow-sm dark:shadow-lg text-sm border border-gray-200 dark:border-none">Total Estimasi Biaya:<br>Rp ${tarifTotal.toLocaleString('id-ID')}</div>`;
+                    
+                    li.appendChild(content);
                     detailList.appendChild(li);
                     detailList.appendChild(liTarif);
                 } else {
-                    li.innerText = `${name} ➔ Naik Rute ${result.routes[i]}`;
+                    content.innerHTML = `<span class="text-gray-900 dark:text-white font-medium">${name}</span><br><span class="text-gray-500 dark:text-accentMuted text-xs mt-1 block">➔ Naik ${result.routes[i]}</span>`;
+                    li.appendChild(content);
                     detailList.appendChild(li);
                 }
             });
         }
 
-        // Fungsi yang diubah menjadi async dan menggunakan OSRM untuk menggambar jalan raya
         async function gambarPeta(result) {
             routeLayer.clearLayers();
             const pathData = result.koordinat_path;
             const latlngs = [];
 
-            // 1. Gambar Marker & Kumpulkan Koordinat
             pathData.forEach((pt) => {
                 latlngs.push([pt.lat, pt.lng]);
                 let popupText = `<b>${pt.name}</b><br>Halte/Stasiun`;
@@ -182,7 +298,6 @@
                 }
             });
 
-            // 2. Pecah path menjadi segmen berdasarkan mode transportasi
             let segments = [];
             let currentSegment = [];
             let currentMode = null;
@@ -194,9 +309,9 @@
                     currentMode = pt.mode;
                 } else {
                     if (pt.mode !== currentMode) {
-                        currentSegment.push(pt); // Add as transfer point to end the current segment
+                        currentSegment.push(pt);
                         segments.push({ mode: currentMode, points: currentSegment });
-                        currentSegment = [pt]; // Start new segment with the transfer point
+                        currentSegment = [pt];
                         currentMode = pt.mode;
                     } else {
                         currentSegment.push(pt);
@@ -207,14 +322,14 @@
                 segments.push({ mode: currentMode, points: currentSegment });
             }
 
-            // 3. Render tiap segmen
             for (const seg of segments) {
                 if (seg.points.length < 2) continue;
                 
                 const coords = seg.points;
+                const strokeColor = isDark ? '#ffffff' : '#9333ea';
                 
                 if (seg.mode === "TRAIN") {
-                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#0055ff', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                    L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: strokeColor, weight: 5, opacity: 0.8 }).addTo(routeLayer);
                 } else if (seg.mode === "WALK") {
                     L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#888888', weight: 4, dashArray: '5, 10' }).addTo(routeLayer);
                 } else {
@@ -225,28 +340,30 @@
                         const data = await response.json();
                         if (data.routes && data.routes.length > 0) {
                             const osrmCoords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
-                            L.polyline(osrmCoords, { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                            L.polyline(osrmCoords, { color: strokeColor, weight: 5, opacity: 0.7 }).addTo(routeLayer);
                         } else {
-                            L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                            L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: strokeColor, weight: 5, opacity: 0.7 }).addTo(routeLayer);
                         }
                     } catch (e) {
-                        L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: '#f78837', weight: 5, opacity: 0.8 }).addTo(routeLayer);
+                        L.polyline(coords.map(pt => [pt.lat, pt.lng]), { color: strokeColor, weight: 5, opacity: 0.7 }).addTo(routeLayer);
                     }
                 }
             }
 
-            // 4. Rute Jalan kaki ke Tempat Wisata
             if(result.koordinat_wisata) {
                 const wisata = result.koordinat_wisata;
                 const halteTerakhir = pathData[pathData.length - 1];
                 latlngs.push([wisata.lat, wisata.lng]);
 
+                const pointColor = isDark ? '#ffffff' : '#9333ea';
+                const fillColor = isDark ? '#0a0a0a' : '#ffffff';
+
                 L.circleMarker([wisata.lat, wisata.lng], {
-                    color: '#075056', fillColor: '#075056', fillOpacity: 1, radius: 8
+                    color: pointColor, fillColor: fillColor, fillOpacity: 1, radius: 8, weight: 3
                 }).addTo(routeLayer).bindPopup(`<b>${wisata.name}</b><br>Tujuan Wisata`);
 
                 L.polyline([[halteTerakhir.lat, halteTerakhir.lng], [wisata.lat, wisata.lng]], { 
-                    color: '#075056', weight: 4, dashArray: '5, 10' 
+                    color: '#888888', weight: 3, dashArray: '5, 5' 
                 }).addTo(routeLayer);
             }
 
